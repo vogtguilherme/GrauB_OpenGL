@@ -18,6 +18,7 @@ GLfloat angle, fAspect, stepX, stepY, stepZ;
 Player jogador;
 Agua mar;
 
+
 void specialKeys();
 
 void redisplayFunc(void)
