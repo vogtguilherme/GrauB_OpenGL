@@ -5,10 +5,12 @@
 // Faça testes e explique os efeitos das cores nas iluminações. Como as luzes interagem?
 // (e.g. vermelho na ambiente + azul no objeto, amarelo na difusa + vermelho na especular)
 // Até que ponto a poligonagem da esfera é impactada pela iluminação? Explique com suas palavras.
-
 #include <gl/freeglut.h>
+#include <iostream>
 
 GLfloat angle, fAspect;
+
+GLfloat cubeAngle, cubeX, cubeY, cubeZ;
 
 // Função callback chamada para fazer o desenho
 void Desenha(void)
@@ -19,7 +21,9 @@ void Desenha(void)
 	glColor3f(0.0f, 0.0f, 1.0f);
 
 	// Desenha uma esfera sólida
-	glutSolidSphere(50.0f, 100, 100);
+	//glutSolidSphere(50.0f, 100, 100);
+	glRotatef(cubeAngle, cubeX, cubeY, cubeZ);
+	glutSolidCube(50);
 
 	glutSwapBuffers();
 }
@@ -74,6 +78,11 @@ void Inicializa(void)
 	glEnable(GL_DEPTH_TEST);
 
 	angle = 45;
+	cubeAngle = 0;
+	cubeX = 0;
+	cubeY = 1.0;
+	cubeZ = 0;
+
 }
 
 // Função usada para especificar o volume de visualização
@@ -85,7 +94,7 @@ void EspecificaParametrosVisualizacao(void)
 	glLoadIdentity();
 
 	// Especifica a projeção perspectiva
-	gluPerspective(angle, fAspect, 0.4, 500);
+	gluPerspective(angle, fAspect, 0.4, 500);	
 
 	// Especifica sistema de coordenadas do modelo
 	glMatrixMode(GL_MODELVIEW);
@@ -93,7 +102,7 @@ void EspecificaParametrosVisualizacao(void)
 	glLoadIdentity();
 
 	// Especifica posição do observador e do alvo
-	gluLookAt(0, 80, 200, 0, 0, 0, 0, 1, 0);
+	gluLookAt(0, 80, 200, 0, 0, 0, 0, 10, 0);
 }
 
 // Função callback chamada quando o tamanho da janela é alterado 
@@ -122,7 +131,33 @@ void GerenciaMouse(int button, int state, int x, int y)
 		if (state == GLUT_DOWN) {  // Zoom-out
 			if (angle <= 130) angle += 5;
 		}
+
 	EspecificaParametrosVisualizacao();
+	glutPostRedisplay();
+}
+
+void GerenciaTeclas(unsigned char key, int x, int y)
+{
+	switch (key)
+	{
+	case 'a':
+		if (cubeAngle > 0)
+		{
+			cubeAngle = 0;
+		}
+		cubeAngle --;
+		std::cout << "GLORIA" << std::endl;
+		break;
+	case 'd':
+		if (cubeAngle < 0)
+		{
+			cubeAngle = 0;
+		}
+		cubeAngle ++;
+		std::cout << "GLORIA A DEUX" << std::endl;
+		break;
+	}
+
 	glutPostRedisplay();
 }
 
@@ -137,6 +172,7 @@ int main(int argc, char **argv)
 	glutDisplayFunc(Desenha);
 	glutReshapeFunc(AlteraTamanhoJanela);
 	glutMouseFunc(GerenciaMouse);
+	glutKeyboardFunc(GerenciaTeclas);
 	Inicializa();
 	glutMainLoop();
 }
