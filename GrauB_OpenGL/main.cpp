@@ -12,6 +12,10 @@ GLfloat angle, fAspect;
 
 GLfloat cubeAngle, cubeX, cubeY, cubeZ;
 
+const int FPS = 60;
+
+void runMainLoop(int val);
+
 // Função callback chamada para fazer o desenho
 void Desenha(void)
 {
@@ -169,10 +173,32 @@ int main(int argc, char **argv)
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize(500, 500);
 	glutCreateWindow("Iluminação");
+
 	glutDisplayFunc(Desenha);
+
 	glutReshapeFunc(AlteraTamanhoJanela);
+
 	glutMouseFunc(GerenciaMouse);
+
 	glutKeyboardFunc(GerenciaTeclas);
+
 	Inicializa();
+
+	//Set main loop
+	glutTimerFunc(1000 / FPS, runMainLoop, 0);
+
 	glutMainLoop();
+}
+
+void runMainLoop(int val)
+{
+	Desenha();
+	
+	//Frame logic
+	//Update();
+
+	//Render();
+	//Run frame one more time
+
+	glutTimerFunc(1000 / FPS, runMainLoop, val);
 }
