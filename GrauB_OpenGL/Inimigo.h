@@ -19,6 +19,9 @@ public:
 
 	void CriaInimigo(float _x, float _y, float _z);
 	void DesenhaInimigo();
+	void DesenhaBarco();
+
+
 	void Movimento(float _x, float _z);
 
 
