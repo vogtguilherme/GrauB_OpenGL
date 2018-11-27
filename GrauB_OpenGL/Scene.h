@@ -9,6 +9,11 @@ public:
 	void GetKeyboardInput();
 	void GetMouseInput();
 
+	void MainMenu();
+	void Pause();
+	void GameOver();
+	void Help();
+
 	Scene();
 	~Scene();
 };
