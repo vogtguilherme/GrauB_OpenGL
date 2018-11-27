@@ -6,11 +6,13 @@
 // (e.g. vermelho na ambiente + azul no objeto, amarelo na difusa + vermelho na especular)
 // Até que ponto a poligonagem da esfera é impactada pela iluminação? Explique com suas palavras.
 #include <gl/freeglut.h>
-#include <iostream>
-#include"Inimigo.h"
-#include"Objetos.h"
-#include"Jogador.h"
-#include"Bullet.h"
+#include  <iostream>
+#include "Inimigo.h"
+#include "Objetos.h"
+#include "Jogador.h"
+#include "Bullet.h"
+#include "Fuel.h"
+
 GLfloat angle, fAspect;
 
 GLfloat cubeAngle, cubeX, cubeY, cubeZ, moveX, moveY, moveZ;
@@ -19,11 +21,17 @@ Inimigo IA[5];
 Bullet Bullets[10];
 Objetos Pecas;
 Jogador Player;
+Fuel fuel[3];
+
 bool lado = true;
 float speed = 5.0f;
 const int FPS = 60;
 
 void runMainLoop(int val);
+
+void EscreveVidas();
+void EscreveKills();
+void EscreveFuel();
 
 // Função callback chamada para fazer o desenho
 void Desenha(void)
@@ -55,7 +63,17 @@ void Desenha(void)
 		Bullets[i].DesenhaBullet();
 	}
 
+	for (int i = 0; i < 3; i++)
+	{
+		fuel[i].DesenhaFuel();
+
+	}
+
 	Player.Desenhajogador();
+
+	EscreveVidas();
+	EscreveKills();
+	EscreveFuel();
 
 	glutSwapBuffers();
 }
@@ -118,7 +136,17 @@ void Inicializa(void)
 	moveY = 0;
 	moveZ = 0;
 
-	Player.CriaPlayer(0, 0, 0);
+	Player.CriaPlayer(0, 5, 0);
+	Player.vidas = 3;
+	Player.acertos = 0;
+	Player.combustivel = 100;
+
+	for (int i = 0; i < 3; i++)
+	{
+		fuel[i].CriaFuel(rand() % 70 - 35, 5.0f, -1100 * (i + 1));
+		fuel[i].speed = 2.0f;
+		fuel[i].combustivel = 50.0f;
+	}
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -130,7 +158,7 @@ void Inicializa(void)
 	{
 		Bullets[i].CriaBullet(0, Player.y, 1000);
 		Bullets[i].usada = false;
-		Bullets[i].speed = 1;
+		Bullets[i].speed = 5;
 	}
 }
 
@@ -181,7 +209,7 @@ void GerenciaMouse(int button, int state, int x, int y)
 			{
 				if (Bullets[i].usada == false)
 				{
-					Bullets[i].CriaBullet(Player.x, Player.y + 2, Player.z - 10);
+					Bullets[i].CriaBullet(Player.x, Player.y, Player.z - 10);
 					Bullets[i].usada = true;
 
 					std::cout << "Taca Fogo";
@@ -207,6 +235,75 @@ void GerenciaMouse(int button, int state, int x, int y)
 	
 	//EspecificaParametrosVisualizacao();
 	//glutPostRedisplay();
+}
+
+void EscreveVidas(void)
+{
+	char texto[8] = "LIFES:";
+	char teste[20];
+	int i = 0;
+
+	//Conversão de inteiro para string, pois a OpenGL só escreve string ou char
+	sprintf_s(teste, "%d", Player.vidas);
+
+	//Cor da fonte
+	glColor3ub(255, 255, 255);
+	//glColor3f(1,1,1);
+	//Posição da palavra
+	glRasterPos3f(30.0f, 35.0f, -0.0f);
+
+	//Uso do "for" para escrever mais de um caracter
+	for (i = 0; i <= strlen(texto); i++)
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, texto[i]);
+
+	for (i = 0; i <= strlen(teste); i++)
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, teste[i]);
+}
+
+void EscreveKills(void)
+{
+	char texto[8] = "KILLS:";
+	char teste[20];
+	int i = 0;
+
+	//Conversão de inteiro para string, pois a OpenGL só escreve string ou char
+	sprintf_s(teste, "%d", Player.acertos);
+
+	//Cor da fonte
+	glColor3ub(255, 255, 255);
+	//glColor3f(1,1,1);
+	//Posição da palavra
+	glRasterPos3f(30.0f, 33.5f, -0.0f);
+
+	//Uso do "for" para escrever mais de um caracter
+	for (i = 0; i <= strlen(texto); i++)
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, texto[i]);
+
+	for (i = 0; i <= strlen(teste); i++)
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, teste[i]);
+}
+
+void EscreveFuel(void)
+{
+	char texto[8] = "FUEL:";
+	char teste[20];
+	int i = 0;
+
+	//Conversão de inteiro para string, pois a OpenGL só escreve string ou char
+	sprintf_s(teste, "%d", (int)Player.combustivel);
+
+	//Cor da fonte
+	glColor3ub(255, 255, 255);
+	//glColor3f(1,1,1);
+	//Posição da palavra
+	glRasterPos3f(30.0f, 32.0f, -0.0f);
+
+	//Uso do "for" para escrever mais de um caracter
+	for (i = 0; i <= strlen(texto); i++)
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, texto[i]);
+
+	for (i = 0; i <= strlen(teste); i++)
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, teste[i]);
 }
 
 void GerenciaTeclas(unsigned char key, int x, int y)
@@ -254,13 +351,15 @@ void runMainLoop(int val)
 {
 	Desenha();
 
+	Player.combustivel -= (100.0f / 30.0f) / 60.0f;
+
 	for (int i = 0; i < 5; i++)
 	{
 		if (IA[i].z < 100) IA[i].Movimento(0, IA[i].speed * speed);
 		else
 		{
 			IA[i].CriaInimigo(rand() % 80 - 40, IA[i].y, -4000);
-			if (IA[i].speed < 20) IA[i].speed += IA[i].speed * 0.2f;
+			if (IA[i].speed < 20) IA[i].speed += IA[i].speed * 0.1f;
 		}
 
 		if (Player.x - 1.5f < IA[i].x + 10 && Player.x + 1.5f > IA[i].x - 10)
@@ -269,29 +368,63 @@ void runMainLoop(int val)
 			{
 				if (Player.z - 1.5f < IA[i].z + 10 && Player.z + 1.5f > IA[i].z - 10)
 				{
-					std::cout << "BAteu Carai z";
+					//std::cout << "BAteu Carai z";
+
+					IA[i].CriaInimigo(50000, IA[i].y, IA[i].z);
+
+					Player.vidas--;
 				}
 			}
 		}
 	}
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 3; i++)
 	{
-		if (Bullets[i].usada == true)
+		fuel[i].Movimenta(0, fuel[i].speed);
+
+		if(fuel[i].z > 100) fuel[i].CriaFuel(rand() % 70 - 35, fuel[i].y, -4000);
+
+		if (Player.x - 1.5f < fuel[i].x + 10 && Player.x + 1.5f > fuel[i].x - 10)
 		{
-			Bullets[i].Movimento(0, -Bullets[i].speed);
+			if (Player.y - 1.5f < fuel[i].y + 10 && Player.y + 1.5f > fuel[i].y - 10)
+			{
+				if (Player.z - 1.5f < fuel[i].z + 10 && Player.z + 1.5f > fuel[i].z - 10)
+				{
+					if(Player.combustivel + fuel[i].combustivel < 100) Player.combustivel += fuel[i].combustivel;
+					else Player.combustivel = 100;
+
+					fuel[i].CriaFuel(50000, fuel[i].y, fuel[i].x);
+				}
+			}
+		}
+	}
+
+	for (int j = 0; j < 10; j++)
+	{
+		if (Bullets[j].usada == true)
+		{
+			Bullets[j].Movimento(0, -Bullets[j].speed);
+
+			if (Bullets[j].z < -2000)
+			{
+				Bullets[j].CriaBullet(0, Player.y, 1000);
+				Bullets[j].usada = false;
+			}
 
 			for (int i = 0; i < 5; i++)
 			{
-				if (Bullets[i].x - 0.5f < IA[i].x + 10 && Bullets[i].x + 0.5f > IA[i].x - 10)
+				if (Bullets[j].x - 0.5f < IA[i].x + 10 && Bullets[j].x + 0.5f > IA[i].x - 10)
 				{
-					if (Bullets[i].y - 0.5f < IA[i].y + 10 && Bullets[i].y + 0.5f > IA[i].y - 10)
+					if (Bullets[j].y - 0.5f < IA[i].y + 10 && Bullets[j].y + 0.5f > IA[i].y - 10)
 					{
-						if (Bullets[i].z - 0.5f < IA[i].z + 10 && Bullets[i].z + 0.5f > IA[i].z - 10)
+						if (Bullets[j].z - 0.5f < IA[i].z + 10 && Bullets[j].z + 0.5f > IA[i].z - 10)
 						{
 							IA[i].CriaInimigo(50000, IA[i].y, IA[i].z);
-							Bullets[i].CriaBullet(0, Player.y, 1000);
-							Bullets[i].usada = false;
+
+							Bullets[j].CriaBullet(0, Player.y, 1000);
+							Bullets[j].usada = false;
+
+							Player.acertos++;
 						}
 					}
 				}
