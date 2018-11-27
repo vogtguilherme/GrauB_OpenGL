@@ -15,32 +15,32 @@ void helicoptero::DesenhaHelecoptero()
 	//helice
 	glColor3f(1.0, 1.0, 0.0);
 	glBegin(GL_QUADS);
-	glVertex3f( 0.1f,  0.5f,0.0);
-	glVertex3f( 0.1f,  0.7f,0.0);
-	glVertex3f( 1.0f,  0.7f,0.0);
-	glVertex3f( 1.0f,  0.5f,0.0);
+	glVertex3f( 0.1f,  0.5f, 0.5);
+	glVertex3f( 0.1f,  0.7f, 0.5);
+	glVertex3f( 1.0f,  0.7f, 0.5);
+	glVertex3f( 1.0f,  0.5f, 0.5);
 	glEnd();
 
 	//tronco
 	glColor3f(1.0, 1.0, 0.0);
 	glBegin(GL_QUADS);
-	glVertex3f(0.5f, 0.3f,0.0);
-	glVertex3f(0.5f, 0.5f,0.0);
-	glVertex3f(0.6f, 0.5f,0.0);
-	glVertex3f(0.6f, 0.3f,0.0);
+	glVertex3f(0.5f, 0.3f,  0.5);
+	glVertex3f(0.5f, 0.5f,  0.5);
+	glVertex3f(0.6f, 0.5f,  0.5);
+	glVertex3f(0.6f, 0.3f,  0.5);
 	glEnd();
 
 	//corpo
 	glColor3f(1.0, 1.0, 0.0);
 	glBegin(GL_QUADS);
-	glVertex3f(0.3f, 0.1f,0.0);
-	glVertex3f(0.3f, 0.3f,0.0);
-	glVertex3f(1.0f, 0.3f,0.0);
-	glVertex3f(1.0f, 0.1f,0.0);
-	glVertex3f(0.8f, 0.1f,0.0);
-	glVertex3f(0.7f, 0.0f,0.0);
-	glVertex3f(0.4f, 0.0f,0.0);
-	glVertex3f(0.3f, 0.1f,0.0);
+	glVertex3f(0.3f, 0.1f,  0.5);
+	glVertex3f(0.3f, 0.3f,  0.5);
+	glVertex3f(1.0f, 0.3f,  0.5);
+	glVertex3f(1.0f, 0.1f,  0.5);
+	glVertex3f(0.8f, 0.1f,  0.5);
+	glVertex3f(0.7f, 0.0f,  0.5);
+	glVertex3f(0.4f, 0.0f,  0.5);
+	glVertex3f(0.3f, 0.1f,  0.5);
 	glEnd();
 	glPopMatrix();
 }
@@ -57,37 +57,32 @@ void helicoptero::Movimento(float _x, float _z)
 	//helice
 	glColor3f(1.0, 1.0, 0.0);
 	glBegin(GL_QUADS);
-	glVertex3f(0.1f, 0.5f, 0.0);
-	glVertex3f(0.1f, 0.7f, 0.0);
-	glVertex3f(1.0f, 0.7f, 0.0);
-	glVertex3f(1.0f, 0.5f, 0.0);
+	glVertex3f(0.1f, 0.5f, 0.5);
+	glVertex3f(0.1f, 0.7f, 0.5);
+	glVertex3f(1.0f, 0.7f, 0.5);
+	glVertex3f(1.0f, 0.5f, 0.5);
 	glEnd();
-
 	//tronco
 	glColor3f(1.0, 1.0, 0.0);
 	glBegin(GL_QUADS);
-	glVertex3f(0.5f, 0.3f, 0.0);
-	glVertex3f(0.5f, 0.5f, 0.0);
-	glVertex3f(0.6f, 0.5f, 0.0);
-	glVertex3f(0.6f, 0.3f, 0.0);
+	glVertex3f(0.5f, 0.3f, 0.5);
+	glVertex3f(0.5f, 0.5f, 0.5);
+	glVertex3f(0.6f, 0.5f, 0.5);
+	glVertex3f(0.6f, 0.3f, 0.5);
 	glEnd();
-
 	//corpo
 	glColor3f(1.0, 1.0, 0.0);
 	glBegin(GL_QUADS);
-	glVertex3f(0.3f, 0.1f, 0.0);
-	glVertex3f(0.3f, 0.3f, 0.0);
-	glVertex3f(1.0f, 0.3f, 0.0);
-	glVertex3f(1.0f, 0.1f, 0.0);
-	glVertex3f(0.8f, 0.1f, 0.0);
-	glVertex3f(0.7f, 0.0f, 0.0);
-	glVertex3f(0.4f, 0.0f, 0.0);
-	glVertex3f(0.3f, 0.1f, 0.0);
+	glVertex3f(0.3f, 0.1f, 0.5);
+	glVertex3f(0.3f, 0.3f, 0.5);
+	glVertex3f(1.0f, 0.3f, 0.5);
+	glVertex3f(1.0f, 0.1f, 0.5);
+	glVertex3f(0.8f, 0.1f, 0.5);
+	glVertex3f(0.7f, 0.0f, 0.5);
+	glVertex3f(0.4f, 0.0f, 0.5);
+	glVertex3f(0.3f, 0.1f, 0.5);
 	glEnd();
 	glPopMatrix();
-
-
-
 }
 
 helicoptero::helicoptero()
