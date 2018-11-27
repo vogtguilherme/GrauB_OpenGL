@@ -27,9 +27,6 @@ void Inimigo::Movimento(float _x, float _z)
 	glColor3f(0, 255, 169);
 	glutSolidCube(20);
 	glPopMatrix();
-
-
-
 }
 
 Inimigo::Inimigo()

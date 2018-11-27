@@ -10,11 +10,13 @@
 #include"Inimigo.h"
 #include"Objetos.h"
 #include"Jogador.h"
+#include"Bullet.h"
 GLfloat angle, fAspect;
 
-GLfloat cubeAngle, cubeX, cubeY, cubeZ, moveX,moveY ,moveZ;
+GLfloat cubeAngle, cubeX, cubeY, cubeZ, moveX, moveY, moveZ;
 
-Inimigo IA;
+Inimigo IA[5];
+Bullet Bullets[10];
 Objetos Pecas;
 Jogador Player;
 bool lado = true;
@@ -43,10 +45,18 @@ void Desenha(void)
 	glutSolidCube(50);
 	*/
 
-	IA.DesenhaInimigo();
+	for (int i = 0; i < 5; i++)
+	{
+		IA[i].DesenhaInimigo();
+	}
+
+	for (int i = 0; i < 10; i++)
+	{
+		Bullets[i].DesenhaBullet();
+	}
+
 	Player.Desenhajogador();
-	
-	
+
 	glutSwapBuffers();
 }
 
@@ -110,9 +120,18 @@ void Inicializa(void)
 
 	Player.CriaPlayer(0, 0, 0);
 
-	IA.CriaInimigo(0, 5.0f, -50);
-	IA.speed = 0.1f;
+	for (int i = 0; i < 5; i++)
+	{
+		IA[i].CriaInimigo(rand() % 80 - 40, 5.0f, -1000 * (i + 1));
+		IA[i].speed = 1.0f;
+	}
 
+	for (int i = 0; i < 10; i++)
+	{
+		Bullets[i].CriaBullet(0, Player.y, 1000);
+		Bullets[i].usada = false;
+		Bullets[i].speed = 1;
+	}
 }
 
 // Função usada para especificar o volume de visualização
@@ -124,7 +143,7 @@ void EspecificaParametrosVisualizacao(void)
 	glLoadIdentity();
 
 	// Especifica a projeção perspectiva
-	gluPerspective(angle, fAspect, 0.4, 3000);	
+	gluPerspective(angle, fAspect, 0.4, 3000);
 
 	// Especifica sistema de coordenadas do modelo
 	glMatrixMode(GL_MODELVIEW);
@@ -153,12 +172,30 @@ void AlteraTamanhoJanela(GLsizei w, GLsizei h)
 void GerenciaMouse(int button, int state, int x, int y)
 {
 	if (button == GLUT_LEFT_BUTTON)
-		if (state == GLUT_DOWN) {  // Zoom-in
-			if (angle >= 10) angle -= 5;
-		}
+		if (state == GLUT_DOWN) 
+		{  
+			// Zoom-in
+			//if (angle >= 10) angle -= 5;
+
+			for (int i = 0; i < 10; i++)
+			{
+				if (Bullets[i].usada == false)
+				{
+					Bullets[i].CriaBullet(Player.x, Player.y + 2, Player.z - 10);
+					Bullets[i].usada = true;
+
+					std::cout << "Taca Fogo";
+
+					break;
+				}
+			}
+
+		}	
 	if (button == GLUT_RIGHT_BUTTON)
-		if (state == GLUT_DOWN) {  // Zoom-out
-			if (angle <= 130) angle += 5;
+		if (state == GLUT_DOWN) 
+		{  
+			// Zoom-out
+			//if (angle <= 130) angle += 5;
 		}
 	if (button == GLUT_KEY_LEFT)
 	{
@@ -167,10 +204,9 @@ void GerenciaMouse(int button, int state, int x, int y)
 			//IA.Movimento(+0.5f, 0.0f, 0.0f);
 		}
 	}
-
-
-	EspecificaParametrosVisualizacao();
-	glutPostRedisplay();
+	
+	//EspecificaParametrosVisualizacao();
+	//glutPostRedisplay();
 }
 
 void GerenciaTeclas(unsigned char key, int x, int y)
@@ -178,13 +214,12 @@ void GerenciaTeclas(unsigned char key, int x, int y)
 	switch (key)
 	{
 	case 'a':
-		if(Player.x > -40) Player.Movimenta(-1);
+		if (Player.x > -39) Player.Movimenta(-1);
 		break;
 	case 'd':
-		if(Player.x < 20) Player.Movimenta(1);
+		if (Player.x < 39) Player.Movimenta(1);
 		break;
 	}
-
 	//std::cout << Player.x;
 
 	glutPostRedisplay();
@@ -203,7 +238,7 @@ int main(int argc, char **argv)
 
 	glutReshapeFunc(AlteraTamanhoJanela);
 
-	//glutMouseFunc(GerenciaMouse);
+	glutMouseFunc(GerenciaMouse);
 
 	glutKeyboardFunc(GerenciaTeclas);
 
@@ -219,26 +254,54 @@ void runMainLoop(int val)
 {
 	Desenha();
 
-	if(IA.z < 100) IA.Movimento(0, IA.speed * speed);
-	else
+	for (int i = 0; i < 5; i++)
 	{
-		IA.CriaInimigo(0, 1.3f, -4000);
-		if(IA.speed < 20) IA.speed += IA.speed * 0.2f;
-	}
-
-	if (Player.x - 0.1f < IA.x + 10 && Player.x + 0.1f > IA.x - 10)
-	{
-		if (Player.y - 0.1f < IA.y + 10 && Player.y + 0.1f > IA.y - 10)
+		if (IA[i].z < 100) IA[i].Movimento(0, IA[i].speed * speed);
+		else
 		{
-			if (Player.z - 0.1f > IA.z + 10 && Player.z + 0.1f < IA.z - 10)
+			IA[i].CriaInimigo(rand() % 80 - 40, IA[i].y, -4000);
+			if (IA[i].speed < 20) IA[i].speed += IA[i].speed * 0.2f;
+		}
+
+		if (Player.x - 1.5f < IA[i].x + 10 && Player.x + 1.5f > IA[i].x - 10)
+		{
+			if (Player.y - 1.5f < IA[i].y + 10 && Player.y + 1.5f > IA[i].y - 10)
 			{
-				std::cout << "BAteu Carai z";
+				if (Player.z - 1.5f < IA[i].z + 10 && Player.z + 1.5f > IA[i].z - 10)
+				{
+					std::cout << "BAteu Carai z";
+				}
 			}
 		}
 	}
 
+	for (int i = 0; i < 10; i++)
+	{
+		if (Bullets[i].usada == true)
+		{
+			Bullets[i].Movimento(0, -Bullets[i].speed);
+
+			for (int i = 0; i < 5; i++)
+			{
+				if (Bullets[i].x - 0.5f < IA[i].x + 10 && Bullets[i].x + 0.5f > IA[i].x - 10)
+				{
+					if (Bullets[i].y - 0.5f < IA[i].y + 10 && Bullets[i].y + 0.5f > IA[i].y - 10)
+					{
+						if (Bullets[i].z - 0.5f < IA[i].z + 10 && Bullets[i].z + 0.5f > IA[i].z - 10)
+						{
+							IA[i].CriaInimigo(50000, IA[i].y, IA[i].z);
+							Bullets[i].CriaBullet(0, Player.y, 1000);
+							Bullets[i].usada = false;
+						}
+					}
+				}
+			}
+		}
+	}
+
+
 	/*
-	if (lado == true) 
+	if (lado == true)
 	{
 		if (moveX < 0)
 		{
@@ -252,7 +315,7 @@ void runMainLoop(int val)
 		moveX++;
 		std::cout << "valor em x: " << moveX << std::endl;
 
-		}		
+		}
 	if (lado == false) {
 		if (moveX < 50)
 		{
@@ -268,12 +331,12 @@ void runMainLoop(int val)
 		std::cout << "valor em x: " << moveX << std::endl;
 
 	}*/
-		
-	
-	
+
+
+
 	//Frame logic
 	//Update();
-	
+
 	//Render();
 	//Run frame one more time
 

@@ -20,20 +20,19 @@ void Objetos::CriaParedes()
 {
 	//parede lado direito
 	glPushMatrix();
+	glTranslatef(-540.0f, 0.5f, -2000.0f);
 	glColor3f(0.0f, 1.0f, 0.0f);
 	glScalef(1000, 0.0, 4000.999f);
-	glTranslatef(-25.05f, 0.01f, 0.0f);
-	glutSolidCube(50);
+	glutSolidCube(1);
 	glPopMatrix();
 
 	//parede lado direito
 	glPushMatrix();
+	glTranslatef(540.0f, 0.5f, -2000.0f);
 	glColor3f(0.0f, 1.0f, 0.0f);
 	glScalef(1000, 0.0, 4000.999f);
-	glTranslatef(25.05f, 0.01f, 0.0f);
-	glutSolidCube(50);
+	glutSolidCube(1);
 	glPopMatrix();
-
 }
 
 void Objetos::Mmovimenta(float _x)
