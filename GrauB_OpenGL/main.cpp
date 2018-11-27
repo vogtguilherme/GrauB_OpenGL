@@ -21,7 +21,7 @@ Inimigo IA[5];
 Bullet Bullets[10];
 Objetos Pecas;
 Jogador Player;
-Fuel Fuel[3];
+Fuel fuel[3];
 
 bool lado = true;
 float speed = 5.0f;
@@ -65,7 +65,7 @@ void Desenha(void)
 
 	for (int i = 0; i < 3; i++)
 	{
-		Fuel[i].DesenhaFuel();
+		fuel[i].DesenhaFuel();
 
 	}
 
@@ -143,9 +143,9 @@ void Inicializa(void)
 
 	for (int i = 0; i < 3; i++)
 	{
-		Fuel[i].CriaFuel(rand() % 70 - 35, 5.0f, -1100 * (i + 1));
-		Fuel[i].speed = 2.0f;
-		Fuel[i].combustivel = 50.0f;
+		fuel[i].CriaFuel(rand() % 70 - 35, 5.0f, -1100 * (i + 1));
+		fuel[i].speed = 2.0f;
+		fuel[i].combustivel = 50.0f;
 	}
 
 	for (int i = 0; i < 5; i++)
@@ -380,20 +380,20 @@ void runMainLoop(int val)
 
 	for (int i = 0; i < 3; i++)
 	{
-		Fuel[i].Movimenta(0, Fuel[i].speed);
+		fuel[i].Movimenta(0, fuel[i].speed);
 
-		if(Fuel[i].z > 100) Fuel[i].CriaFuel(rand() % 70 - 35, Fuel[i].y, -4000);
+		if(fuel[i].z > 100) fuel[i].CriaFuel(rand() % 70 - 35, fuel[i].y, -4000);
 
-		if (Player.x - 1.5f < Fuel[i].x + 10 && Player.x + 1.5f > Fuel[i].x - 10)
+		if (Player.x - 1.5f < fuel[i].x + 10 && Player.x + 1.5f > fuel[i].x - 10)
 		{
-			if (Player.y - 1.5f < Fuel[i].y + 10 && Player.y + 1.5f > Fuel[i].y - 10)
+			if (Player.y - 1.5f < fuel[i].y + 10 && Player.y + 1.5f > fuel[i].y - 10)
 			{
-				if (Player.z - 1.5f < Fuel[i].z + 10 && Player.z + 1.5f > Fuel[i].z - 10)
+				if (Player.z - 1.5f < fuel[i].z + 10 && Player.z + 1.5f > fuel[i].z - 10)
 				{
-					if(Player.combustivel + Fuel[i].combustivel < 100) Player.combustivel += Fuel[i].combustivel;
+					if(Player.combustivel + fuel[i].combustivel < 100) Player.combustivel += fuel[i].combustivel;
 					else Player.combustivel = 100;
 
-					Fuel[i].CriaFuel(50000, Fuel[i].y, Fuel[i].x);
+					fuel[i].CriaFuel(50000, fuel[i].y, fuel[i].x);
 				}
 			}
 		}
