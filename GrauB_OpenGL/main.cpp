@@ -1,10 +1,10 @@
-//Quais as diferenças entre luz ambiente, especular, difusa e emissiva?
-//O que é SHININESS?
-//O que acontece quando trocamos o parâmetro da função glShadeModel?
+//Quais as diferenï¿½as entre luz ambiente, especular, difusa e emissiva?
+//O que ï¿½ SHININESS?
+//O que acontece quando trocamos o parï¿½metro da funï¿½ï¿½o glShadeModel?
 // Ligue apenas 1 luz por vez e descreva seus efeitos
-// Faça testes e explique os efeitos das cores nas iluminações. Como as luzes interagem?
+// Faï¿½a testes e explique os efeitos das cores nas iluminaï¿½ï¿½es. Como as luzes interagem?
 // (e.g. vermelho na ambiente + azul no objeto, amarelo na difusa + vermelho na especular)
-// Até que ponto a poligonagem da esfera é impactada pela iluminação? Explique com suas palavras.
+// Atï¿½ que ponto a poligonagem da esfera ï¿½ impactada pela iluminaï¿½ï¿½o? Explique com suas palavras.
 #include <gl/freeglut.h>
 #include  <iostream>
 #include "Inimigo.h"
@@ -33,7 +33,7 @@ void EscreveVidas();
 void EscreveKills();
 void EscreveFuel();
 
-// Função callback chamada para fazer o desenho
+// Funï¿½ï¿½o callback chamada para fazer o desenho
 void Desenha(void)
 {
 	// Limpa a janela e o depth buffer
@@ -41,7 +41,7 @@ void Desenha(void)
 
 	//glColor3f(0.0f, 0.0f, 1.0f);
 
-	// Desenha uma esfera sólida
+	// Desenha uma esfera sï¿½lida
 	//glutSolidSphere(50.0f, 100, 100);
 
 	Pecas.criaMar();
@@ -78,7 +78,7 @@ void Desenha(void)
 	glutSwapBuffers();
 }
 
-// Inicializa parâmetros de rendering
+// Inicializa parï¿½metros de rendering
 void Inicializa(void)
 {
 	GLfloat luzAmbiente[4] = { 0.2,0.2,0.2,1.0 };
@@ -86,43 +86,43 @@ void Inicializa(void)
 	GLfloat luzEspecular[4] = { 1.0, 1.0, 1.0, 1.0 };// "brilho" 
 	GLfloat posicaoLuz[4] = { 0.0, 50.0, 50.0, 1.0 };
 
-	GLfloat mat_emission[] = { 1.0, 0.0, 0.0, 1.0 };   // emisão do material
+	GLfloat mat_emission[] = { 1.0, 0.0, 0.0, 1.0 };   // emisï¿½o do material
 
 													   // Capacidade de brilho do material
 	GLfloat especularidade[4] = { 1.0,1.0,1.0,1.0 };
 	GLint especMaterial = 60;
 
-	// Especifica que a cor de fundo da janela será preta
+	// Especifica que a cor de fundo da janela serï¿½ preta
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-	// Habilita o modelo de colorização de Gouraud
+	// Habilita o modelo de colorizaï¿½ï¿½o de Gouraud
 	glShadeModel(GL_SMOOTH);
 	//glShadeModel(GL_FLAT);
 
 
-	// Define emisão do material
+	// Define emisï¿½o do material
 	//glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
 
-	// Define a refletância do material 
+	// Define a refletï¿½ncia do material 
 	glMaterialfv(GL_FRONT, GL_SPECULAR, especularidade);
 
-	// Define a concentração do brilho
+	// Define a concentraï¿½ï¿½o do brilho
 	glMateriali(GL_FRONT, GL_SHININESS, especMaterial);
 
 	// Ativa o uso da luz ambiente 
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, luzAmbiente);
 
-	// Define os parâmetros da luz de número 0 (total de 8 luzes [0..7])
+	// Define os parï¿½metros da luz de nï¿½mero 0 (total de 8 luzes [0..7])
 	glLightfv(GL_LIGHT0, GL_AMBIENT, luzAmbiente);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusa);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, luzEspecular);
 	glLightfv(GL_LIGHT0, GL_POSITION, posicaoLuz);
 
-	// Habilita a definição da cor do material a partir da cor corrente
+	// Habilita a definiï¿½ï¿½o da cor do material a partir da cor corrente
 	glEnable(GL_COLOR_MATERIAL);
-	//Habilita o uso de iluminação
+	//Habilita o uso de iluminaï¿½ï¿½o
 	glEnable(GL_LIGHTING);
-	// Habilita a luz de número 0
+	// Habilita a luz de nï¿½mero 0
 	glEnable(GL_LIGHT0);
 	// Habilita o depth-buffering
 	glEnable(GL_DEPTH_TEST);
@@ -162,41 +162,41 @@ void Inicializa(void)
 	}
 }
 
-// Função usada para especificar o volume de visualização
+// Funï¿½ï¿½o usada para especificar o volume de visualizaï¿½ï¿½o
 void EspecificaParametrosVisualizacao(void)
 {
-	// Especifica sistema de coordenadas de projeção
+	// Especifica sistema de coordenadas de projeï¿½ï¿½o
 	glMatrixMode(GL_PROJECTION);
-	// Inicializa sistema de coordenadas de projeção
+	// Inicializa sistema de coordenadas de projeï¿½ï¿½o
 	glLoadIdentity();
 
-	// Especifica a projeção perspectiva
+	// Especifica a projeï¿½ï¿½o perspectiva
 	gluPerspective(angle, fAspect, 0.4, 3000);
 
 	// Especifica sistema de coordenadas do modelo
 	glMatrixMode(GL_MODELVIEW);
 	// Inicializa sistema de coordenadas do modelo
 
-	// Especifica posição do observador e do alvo
+	// Especifica posiï¿½ï¿½o do observador e do alvo
 	gluLookAt(0, 40, 80, 0, 25, 0, 0, 10, 0);
 }
 
-// Função callback chamada quando o tamanho da janela é alterado 
+// Funï¿½ï¿½o callback chamada quando o tamanho da janela ï¿½ alterado 
 void AlteraTamanhoJanela(GLsizei w, GLsizei h)
 {
-	// Para previnir uma divisão por zero
+	// Para previnir uma divisï¿½o por zero
 	if (h == 0) h = 1;
 
 	// Especifica o tamanho da viewport
 	glViewport(0, 0, w, h);
 
-	// Calcula a correção de aspecto
+	// Calcula a correï¿½ï¿½o de aspecto
 	fAspect = (GLfloat)w / (GLfloat)h;
 
 	EspecificaParametrosVisualizacao();
 }
 
-// Função callback chamada para gerenciar eventos do mouse
+// Funï¿½ï¿½o callback chamada para gerenciar eventos do mouse
 void GerenciaMouse(int button, int state, int x, int y)
 {
 	if (button == GLUT_LEFT_BUTTON)
@@ -243,13 +243,13 @@ void EscreveVidas(void)
 	char teste[20];
 	int i = 0;
 
-	//Conversão de inteiro para string, pois a OpenGL só escreve string ou char
+	//Conversï¿½o de inteiro para string, pois a OpenGL sï¿½ escreve string ou char
 	sprintf_s(teste, "%d", Player.vidas);
 
 	//Cor da fonte
 	glColor3ub(255, 255, 255);
 	//glColor3f(1,1,1);
-	//Posição da palavra
+	//Posiï¿½ï¿½o da palavra
 	glRasterPos3f(30.0f, 35.0f, -0.0f);
 
 	//Uso do "for" para escrever mais de um caracter
@@ -266,13 +266,13 @@ void EscreveKills(void)
 	char teste[20];
 	int i = 0;
 
-	//Conversão de inteiro para string, pois a OpenGL só escreve string ou char
+	//Conversï¿½o de inteiro para string, pois a OpenGL sï¿½ escreve string ou char
 	sprintf_s(teste, "%d", Player.acertos);
 
 	//Cor da fonte
 	glColor3ub(255, 255, 255);
 	//glColor3f(1,1,1);
-	//Posição da palavra
+	//Posiï¿½ï¿½o da palavra
 	glRasterPos3f(30.0f, 33.5f, -0.0f);
 
 	//Uso do "for" para escrever mais de um caracter
@@ -289,13 +289,13 @@ void EscreveFuel(void)
 	char teste[20];
 	int i = 0;
 
-	//Conversão de inteiro para string, pois a OpenGL só escreve string ou char
+	//Conversï¿½o de inteiro para string, pois a OpenGL sï¿½ escreve string ou char
 	sprintf_s(teste, "%d", (int)Player.combustivel);
 
 	//Cor da fonte
 	glColor3ub(255, 255, 255);
 	//glColor3f(1,1,1);
-	//Posição da palavra
+	//Posiï¿½ï¿½o da palavra
 	glRasterPos3f(30.0f, 32.0f, -0.0f);
 
 	//Uso do "for" para escrever mais de um caracter
@@ -329,7 +329,7 @@ int main(int argc, char **argv)
 
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize(900, 600);
-	glutCreateWindow("Iluminação");
+	glutCreateWindow("Iluminaï¿½ï¿½o");
 
 	glutDisplayFunc(Desenha);
 
@@ -373,6 +373,31 @@ void runMainLoop(int val)
 					IA[i].CriaInimigo(50000, IA[i].y, IA[i].z);
 
 					Player.vidas--;
+				}
+			}
+		}
+
+		for (int i = 0; i < 10; i++)
+		{
+			if (Bullets[i].usada == true)
+			{
+				Bullets[i].Movimento(0, -Bullets[i].speed);
+
+				for (int i = 0; i < 5; i++)
+				{
+					if (Bullets[i].x - 0.5f < IA[i].x + 10 && Bullets[i].x + 0.5f > IA[i].x - 10)
+					{
+						if (Bullets[i].y - 0.5f < IA[i].y + 10 && Bullets[i].y + 0.5f > IA[i].y - 10)
+						{
+							if (Bullets[i].z - 0.5f < IA[i].z + 10 && Bullets[i].z + 0.5f > IA[i].z - 10)
+							{
+								IA[i].CriaInimigo(50000, IA[i].y, IA[i].z);
+
+								Bullets[i].CriaBullet(0, Player.y, 1000);
+								Bullets[i].usada = false;
+							}
+						}
+					}
 				}
 			}
 		}
