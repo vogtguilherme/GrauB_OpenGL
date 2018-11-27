@@ -33,6 +33,8 @@ void EscreveVidas();
 void EscreveKills();
 void EscreveFuel();
 
+bool sndPlaySond(LPCTSTR lpszSound,
+	UINT fuSound);
 // Função callback chamada para fazer o desenho
 void Desenha(void)
 {
@@ -211,6 +213,9 @@ void GerenciaMouse(int button, int state, int x, int y)
 				{
 					Bullets[i].CriaBullet(Player.x, Player.y, Player.z - 10);
 					Bullets[i].usada = true;
+
+
+					
 
 					std::cout << "Taca Fogo";
 
