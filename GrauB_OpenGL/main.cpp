@@ -181,7 +181,7 @@ void GerenciaMouse(int button, int state, int x, int y)
 			{
 				if (Bullets[i].usada == false)
 				{
-					Bullets[i].CriaBullet(Player.x, Player.y + 2, Player.z - 10);
+					Bullets[i].CriaBullet(Player.x, Player.y, Player.z - 10);
 					Bullets[i].usada = true;
 
 					std::cout << "Taca Fogo";
@@ -260,7 +260,7 @@ void runMainLoop(int val)
 		else
 		{
 			IA[i].CriaInimigo(rand() % 80 - 40, IA[i].y, -4000);
-			if (IA[i].speed < 20) IA[i].speed += IA[i].speed * 0.2f;
+			if (IA[i].speed < 20) IA[i].speed += IA[i].speed * 0.1f;
 		}
 
 		if (Player.x - 1.5f < IA[i].x + 10 && Player.x + 1.5f > IA[i].x - 10)
@@ -273,25 +273,51 @@ void runMainLoop(int val)
 				}
 			}
 		}
+
+		for (int i = 0; i < 10; i++)
+		{
+			if (Bullets[i].usada == true)
+			{
+				Bullets[i].Movimento(0, -Bullets[i].speed);
+
+				for (int i = 0; i < 5; i++)
+				{
+					if (Bullets[i].x - 0.5f < IA[i].x + 10 && Bullets[i].x + 0.5f > IA[i].x - 10)
+					{
+						if (Bullets[i].y - 0.5f < IA[i].y + 10 && Bullets[i].y + 0.5f > IA[i].y - 10)
+						{
+							if (Bullets[i].z - 0.5f < IA[i].z + 10 && Bullets[i].z + 0.5f > IA[i].z - 10)
+							{
+								IA[i].CriaInimigo(50000, IA[i].y, IA[i].z);
+
+								Bullets[i].CriaBullet(0, Player.y, 1000);
+								Bullets[i].usada = false;
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 
-	for (int i = 0; i < 10; i++)
+	for (int j = 0; j < 10; j++)
 	{
-		if (Bullets[i].usada == true)
+		if (Bullets[j].usada == true)
 		{
-			Bullets[i].Movimento(0, -Bullets[i].speed);
+			Bullets[j].Movimento(0, -Bullets[j].speed);
 
 			for (int i = 0; i < 5; i++)
 			{
-				if (Bullets[i].x - 0.5f < IA[i].x + 10 && Bullets[i].x + 0.5f > IA[i].x - 10)
+				if (Bullets[j].x - 0.5f < IA[i].x + 10 && Bullets[j].x + 0.5f > IA[i].x - 10)
 				{
-					if (Bullets[i].y - 0.5f < IA[i].y + 10 && Bullets[i].y + 0.5f > IA[i].y - 10)
+					if (Bullets[j].y - 0.5f < IA[i].y + 10 && Bullets[j].y + 0.5f > IA[i].y - 10)
 					{
-						if (Bullets[i].z - 0.5f < IA[i].z + 10 && Bullets[i].z + 0.5f > IA[i].z - 10)
+						if (Bullets[j].z - 0.5f < IA[i].z + 10 && Bullets[j].z + 0.5f > IA[i].z - 10)
 						{
 							IA[i].CriaInimigo(50000, IA[i].y, IA[i].z);
-							Bullets[i].CriaBullet(0, Player.y, 1000);
-							Bullets[i].usada = false;
+
+							Bullets[j].CriaBullet(0, Player.y, 1000);
+							Bullets[j].usada = false;
 						}
 					}
 				}
