@@ -21,7 +21,10 @@
 #include"Jogador.h"
 #include"Bullet.h"
 #include"helicoptero.h"
+<<<<<<< HEAD
 >>>>>>> criacao de algumas coisas
+=======
+>>>>>>> porra_bruno
 GLfloat angle, fAspect;
 
 GLfloat cubeAngle, cubeX, cubeY, cubeZ, moveX, moveY, moveZ;
@@ -29,12 +32,16 @@ Bullet Bullets[10];
 Inimigo IA[5];
 Objetos Pecas;
 Jogador Player;
+<<<<<<< HEAD
 <<<<<<< develop
 Fuel fuel[3];
 
 =======
 helicoptero Helecoptero[5];
 >>>>>>> criacao de algumas coisas
+=======
+helicoptero Helecoptero[5];
+>>>>>>> porra_bruno
 bool lado = true;
 float speed = 5.0f;
 const int FPS = 60;
@@ -71,6 +78,7 @@ void Desenha(void)
 	{
 		IA[i].DesenhaInimigo();
 		
+<<<<<<< HEAD
 	}
 
 	//criacao dos helecopteros
@@ -79,6 +87,16 @@ void Desenha(void)
 		Helecoptero[i].DesenhaHelecoptero();
 	}
 
+=======
+	}
+
+	//criacao dos helecopteros
+	for (int i = 0; i < 5; i++)
+	{
+		Helecoptero[i].DesenhaHelecoptero();
+	}
+
+>>>>>>> porra_bruno
 	
 	//criação da balas
 	for (int i = 0; i < 10; i++)
@@ -86,6 +104,7 @@ void Desenha(void)
 		Bullets[i].DesenhaBullet();
 	}
 
+<<<<<<< HEAD
 <<<<<<< develop
 	for (int i = 0; i < 3; i++)
 	{
@@ -94,6 +113,8 @@ void Desenha(void)
 	}
 =======
 >>>>>>> criacao de algumas coisas
+=======
+>>>>>>> porra_bruno
 
 	Player.Desenhajogador();
 
@@ -167,6 +188,7 @@ void Inicializa(void)
 	Player.acertos = 0;
 	Player.combustivel = 100;
 
+<<<<<<< HEAD
 	for (int i = 0; i < 3; i++)
 	{
 		fuel[i].CriaFuel(rand() % 70 - 35, 5.0f, -1100 * (i + 1));
@@ -174,6 +196,8 @@ void Inicializa(void)
 		fuel[i].combustivel = 50.0f;
 	}
 
+=======
+>>>>>>> porra_bruno
 	//criando os inimigos dentro da cena randomicamente
 	for (int i = 0; i < 5; i++)
 	{
@@ -387,12 +411,16 @@ void runMainLoop(int val)
 {
 	Desenha();
 
+<<<<<<< HEAD
 <<<<<<< develop
 	Player.combustivel -= (100.0f / 30.0f) / 60.0f;
 
 =======
 	//movimento dos helecopteros
 >>>>>>> criacao de algumas coisas
+=======
+	//movimento dos helecopteros
+>>>>>>> porra_bruno
 	for (int i = 0; i < 5; i++)
 	{
 		if (Helecoptero[i].z < 100) Helecoptero[i].Movimento(0, Helecoptero[i].speed * speed);
@@ -429,6 +457,7 @@ void runMainLoop(int val)
 			}
 
 			if (Player.x - 1.5f < IA[i].x + 10 && Player.x + 1.5f > IA[i].x - 10)
+<<<<<<< HEAD
 			{
 				if (Player.y - 1.5f < IA[i].y + 10 && Player.y + 1.5f > IA[i].y - 10)
 				{
@@ -447,6 +476,26 @@ void runMainLoop(int val)
 
 					for (int i = 0; i < 5; i++)
 					{
+=======
+			{
+				if (Player.y - 1.5f < IA[i].y + 10 && Player.y + 1.5f > IA[i].y - 10)
+				{
+					if (Player.z - 1.5f < IA[i].z + 10 && Player.z + 1.5f > IA[i].z - 10)
+					{
+						std::cout << "BAteu Carai z";
+					}
+				}
+			}
+
+			for (int i = 0; i < 10; i++)
+			{
+				if (Bullets[i].usada == true)
+				{
+					Bullets[i].Movimento(0, -Bullets[i].speed);
+
+					for (int i = 0; i < 5; i++)
+					{
+>>>>>>> porra_bruno
 						if (Bullets[i].x - 0.5f < IA[i].x + 10 && Bullets[i].x + 0.5f > IA[i].x - 10)
 						{
 							if (Bullets[i].y - 0.5f < IA[i].y + 10 && Bullets[i].y + 0.5f > IA[i].y - 10)
@@ -465,6 +514,7 @@ void runMainLoop(int val)
 			}
 		}
 
+<<<<<<< HEAD
 <<<<<<< develop
 	for (int i = 0; i < 3; i++)
 	{
@@ -508,6 +558,14 @@ void runMainLoop(int val)
 			{
 				Bullets[j].Movimento(0, -Bullets[j].speed);
 
+=======
+		for (int j = 0; j < 10; j++)
+		{
+			if (Bullets[j].usada == true)
+			{
+				Bullets[j].Movimento(0, -Bullets[j].speed);
+
+>>>>>>> porra_bruno
 				for (int i = 0; i < 5; i++)
 				{
 					if (Bullets[j].x - 0.5f < IA[i].x + 10 && Bullets[j].x + 0.5f > IA[i].x - 10)
@@ -518,6 +576,7 @@ void runMainLoop(int val)
 							{
 								IA[i].CriaInimigo(50000, IA[i].y, IA[i].z);
 
+<<<<<<< HEAD
 <<<<<<< develop
 							Bullets[j].CriaBullet(0, Player.y, 1000);
 							Bullets[j].usada = false;
@@ -528,6 +587,11 @@ void runMainLoop(int val)
 								Bullets[j].usada = false;
 							}
 >>>>>>> criacao de algumas coisas
+=======
+								Bullets[j].CriaBullet(0, Player.y, 1000);
+								Bullets[j].usada = false;
+							}
+>>>>>>> porra_bruno
 						}
 					}
 				}
@@ -557,6 +621,18 @@ void runMainLoop(int val)
 				// IA.Movimento(moveX - speed, 0.0, 0.0);
 				Pecas.Mmovimenta(moveX - speed);
 			}
+<<<<<<< HEAD
+
+			if (moveX <= -10)
+			{
+				lado = true;
+			}
+			moveX--;
+			std::cout << "valor em x: " << moveX << std::endl;
+
+		}*/
+=======
+>>>>>>> porra_bruno
 
 			if (moveX <= -10)
 			{
@@ -567,6 +643,14 @@ void runMainLoop(int val)
 
 		}*/
 
+<<<<<<< HEAD
+		//Frame logic
+		//Update();
+
+		//Render();
+		//Run frame one more time
+
+=======
 
 
 		//Frame logic
@@ -575,6 +659,7 @@ void runMainLoop(int val)
 		//Render();
 		//Run frame one more time
 
+>>>>>>> porra_bruno
 		glutTimerFunc(1000 / FPS, runMainLoop, val);
 	}
 }
