@@ -18,6 +18,8 @@ void Jogador::Desenhajogador()
 	glEnd();
 	glPopMatrix();
 
+
+
 }
 
 void Jogador::Movimenta(float _x)

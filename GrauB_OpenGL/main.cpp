@@ -6,6 +6,7 @@
 // (e.g. vermelho na ambiente + azul no objeto, amarelo na difusa + vermelho na especular)
 // Atï¿½ que ponto a poligonagem da esfera ï¿½ impactada pela iluminaï¿½ï¿½o? Explique com suas palavras.
 #include <gl/freeglut.h>
+<<<<<<< develop
 #include  <iostream>
 #include "Inimigo.h"
 #include "Objetos.h"
@@ -13,16 +14,27 @@
 #include "Bullet.h"
 #include "Fuel.h"
 
+=======
+#include <iostream>
+#include"Inimigo.h"
+#include"Objetos.h"
+#include"Jogador.h"
+#include"Bullet.h"
+#include"helicoptero.h"
+>>>>>>> criacao de algumas coisas
 GLfloat angle, fAspect;
 
 GLfloat cubeAngle, cubeX, cubeY, cubeZ, moveX, moveY, moveZ;
-
-Inimigo IA[5];
 Bullet Bullets[10];
+Inimigo IA[5];
 Objetos Pecas;
 Jogador Player;
+<<<<<<< develop
 Fuel fuel[3];
 
+=======
+helicoptero Helecoptero[5];
+>>>>>>> criacao de algumas coisas
 bool lado = true;
 float speed = 5.0f;
 const int FPS = 60;
@@ -53,21 +65,35 @@ void Desenha(void)
 	glutSolidCube(50);
 	*/
 
+
+	//criacao dos barcos
 	for (int i = 0; i < 5; i++)
 	{
 		IA[i].DesenhaInimigo();
+		
 	}
 
+	//criacao dos helecopteros
+	for (int i = 0; i < 5; i++)
+	{
+		Helecoptero[i].DesenhaHelecoptero();
+	}
+
+	
+	//criação da balas
 	for (int i = 0; i < 10; i++)
 	{
 		Bullets[i].DesenhaBullet();
 	}
 
+<<<<<<< develop
 	for (int i = 0; i < 3; i++)
 	{
 		fuel[i].DesenhaFuel();
 
 	}
+=======
+>>>>>>> criacao de algumas coisas
 
 	Player.Desenhajogador();
 
@@ -148,12 +174,22 @@ void Inicializa(void)
 		fuel[i].combustivel = 50.0f;
 	}
 
+	//criando os inimigos dentro da cena randomicamente
 	for (int i = 0; i < 5; i++)
 	{
 		IA[i].CriaInimigo(rand() % 80 - 40, 5.0f, -1000 * (i + 1));
 		IA[i].speed = 1.0f;
 	}
 
+	//criando os helecopteros dentro da cena randomicamente
+	for (int i = 0; i < 5; i++)
+	{
+		Helecoptero[i].CriaHelecoptero(rand() % 90 - 140, 5.0f, -1000 * (i + 1));
+		Helecoptero[i].speed = 1.5f;
+	}
+
+	
+	//criacao das balas
 	for (int i = 0; i < 10; i++)
 	{
 		Bullets[i].CriaBullet(0, Player.y, 1000);
@@ -351,22 +387,26 @@ void runMainLoop(int val)
 {
 	Desenha();
 
+<<<<<<< develop
 	Player.combustivel -= (100.0f / 30.0f) / 60.0f;
 
+=======
+	//movimento dos helecopteros
+>>>>>>> criacao de algumas coisas
 	for (int i = 0; i < 5; i++)
 	{
-		if (IA[i].z < 100) IA[i].Movimento(0, IA[i].speed * speed);
+		if (Helecoptero[i].z < 100) Helecoptero[i].Movimento(0, Helecoptero[i].speed * speed);
 		else
 		{
-			IA[i].CriaInimigo(rand() % 80 - 40, IA[i].y, -4000);
-			if (IA[i].speed < 20) IA[i].speed += IA[i].speed * 0.1f;
+			Helecoptero[i].CriaHelecoptero(rand() % 80 - 40, Helecoptero[i].y, -4000);
+			if (Helecoptero[i].speed < 20) Helecoptero[i].speed += Helecoptero[i].speed * 0.1f;
 		}
 
-		if (Player.x - 1.5f < IA[i].x + 10 && Player.x + 1.5f > IA[i].x - 10)
+		if (Player.x - 1.5f < Helecoptero[i].x + 10 && Player.x + 1.5f > Helecoptero[i].x - 10)
 		{
-			if (Player.y - 1.5f < IA[i].y + 10 && Player.y + 1.5f > IA[i].y - 10)
+			if (Player.y - 1.5f < Helecoptero[i].y + 10 && Player.y + 1.5f > Helecoptero[i].y - 10)
 			{
-				if (Player.z - 1.5f < IA[i].z + 10 && Player.z + 1.5f > IA[i].z - 10)
+				if (Player.z - 1.5f < Helecoptero[i].z + 10 && Player.z + 1.5f > Helecoptero[i].z - 10)
 				{
 					//std::cout << "BAteu Carai z";
 
@@ -377,32 +417,55 @@ void runMainLoop(int val)
 			}
 		}
 
-		for (int i = 0; i < 10; i++)
+	
+		//movimentacao dos inimigos e teste de colisao com o player
+		for (int i = 0; i < 5; i++)
 		{
-			if (Bullets[i].usada == true)
+			if (IA[i].z < 100) IA[i].Movimento(0, IA[i].speed * speed);
+			else
 			{
-				Bullets[i].Movimento(0, -Bullets[i].speed);
+				IA[i].CriaInimigo(rand() % 80 - 40, IA[i].y, -4000);
+				if (IA[i].speed < 20) IA[i].speed += IA[i].speed * 0.1f;
+			}
 
-				for (int i = 0; i < 5; i++)
+			if (Player.x - 1.5f < IA[i].x + 10 && Player.x + 1.5f > IA[i].x - 10)
+			{
+				if (Player.y - 1.5f < IA[i].y + 10 && Player.y + 1.5f > IA[i].y - 10)
 				{
-					if (Bullets[i].x - 0.5f < IA[i].x + 10 && Bullets[i].x + 0.5f > IA[i].x - 10)
+					if (Player.z - 1.5f < IA[i].z + 10 && Player.z + 1.5f > IA[i].z - 10)
 					{
-						if (Bullets[i].y - 0.5f < IA[i].y + 10 && Bullets[i].y + 0.5f > IA[i].y - 10)
-						{
-							if (Bullets[i].z - 0.5f < IA[i].z + 10 && Bullets[i].z + 0.5f > IA[i].z - 10)
-							{
-								IA[i].CriaInimigo(50000, IA[i].y, IA[i].z);
+						std::cout << "BAteu Carai z";
+					}
+				}
+			}
 
-								Bullets[i].CriaBullet(0, Player.y, 1000);
-								Bullets[i].usada = false;
+			for (int i = 0; i < 10; i++)
+			{
+				if (Bullets[i].usada == true)
+				{
+					Bullets[i].Movimento(0, -Bullets[i].speed);
+
+					for (int i = 0; i < 5; i++)
+					{
+						if (Bullets[i].x - 0.5f < IA[i].x + 10 && Bullets[i].x + 0.5f > IA[i].x - 10)
+						{
+							if (Bullets[i].y - 0.5f < IA[i].y + 10 && Bullets[i].y + 0.5f > IA[i].y - 10)
+							{
+								if (Bullets[i].z - 0.5f < IA[i].z + 10 && Bullets[i].z + 0.5f > IA[i].z - 10)
+								{
+									IA[i].CriaInimigo(50000, IA[i].y, IA[i].z);
+
+									Bullets[i].CriaBullet(0, Player.y, 1000);
+									Bullets[i].usada = false;
+								}
 							}
 						}
 					}
 				}
 			}
 		}
-	}
 
+<<<<<<< develop
 	for (int i = 0; i < 3; i++)
 	{
 		fuel[i].Movimenta(0, fuel[i].speed);
@@ -437,66 +500,81 @@ void runMainLoop(int val)
 			}
 
 			for (int i = 0; i < 5; i++)
+=======
+		for (int j = 0; j < 10; j++)
+		{
+			if (Bullets[j].usada == true)
+>>>>>>> criacao de algumas coisas
 			{
-				if (Bullets[j].x - 0.5f < IA[i].x + 10 && Bullets[j].x + 0.5f > IA[i].x - 10)
-				{
-					if (Bullets[j].y - 0.5f < IA[i].y + 10 && Bullets[j].y + 0.5f > IA[i].y - 10)
-					{
-						if (Bullets[j].z - 0.5f < IA[i].z + 10 && Bullets[j].z + 0.5f > IA[i].z - 10)
-						{
-							IA[i].CriaInimigo(50000, IA[i].y, IA[i].z);
+				Bullets[j].Movimento(0, -Bullets[j].speed);
 
+				for (int i = 0; i < 5; i++)
+				{
+					if (Bullets[j].x - 0.5f < IA[i].x + 10 && Bullets[j].x + 0.5f > IA[i].x - 10)
+					{
+						if (Bullets[j].y - 0.5f < IA[i].y + 10 && Bullets[j].y + 0.5f > IA[i].y - 10)
+						{
+							if (Bullets[j].z - 0.5f < IA[i].z + 10 && Bullets[j].z + 0.5f > IA[i].z - 10)
+							{
+								IA[i].CriaInimigo(50000, IA[i].y, IA[i].z);
+
+<<<<<<< develop
 							Bullets[j].CriaBullet(0, Player.y, 1000);
 							Bullets[j].usada = false;
 
 							Player.acertos++;
+=======
+								Bullets[j].CriaBullet(0, Player.y, 1000);
+								Bullets[j].usada = false;
+							}
+>>>>>>> criacao de algumas coisas
 						}
 					}
 				}
 			}
 		}
+
+
+		/*
+		if (lado == true)
+		{
+			if (moveX < 0)
+			{
+				//IA.Movimento(moveX - speed, 0.0f, 0.0f);
+				Pecas.Mmovimenta(moveX - speed);
+			}
+			if (moveX >= 10)
+			{
+				lado = false;
+			}
+			moveX++;
+			std::cout << "valor em x: " << moveX << std::endl;
+
+			}
+		if (lado == false) {
+			if (moveX < 50)
+			{
+				// IA.Movimento(moveX - speed, 0.0, 0.0);
+				Pecas.Mmovimenta(moveX - speed);
+			}
+
+			if (moveX <= -10)
+			{
+				lado = true;
+			}
+			moveX--;
+			std::cout << "valor em x: " << moveX << std::endl;
+
+		}*/
+
+
+
+		//Frame logic
+		//Update();
+
+		//Render();
+		//Run frame one more time
+
+		glutTimerFunc(1000 / FPS, runMainLoop, val);
 	}
-
-
-	/*
-	if (lado == true)
-	{
-		if (moveX < 0)
-		{
-			//IA.Movimento(moveX - speed, 0.0f, 0.0f);
-			Pecas.Mmovimenta(moveX - speed);
-		}
-		if (moveX >= 10)
-		{
-			lado = false;
-		}
-		moveX++;
-		std::cout << "valor em x: " << moveX << std::endl;
-
-		}
-	if (lado == false) {
-		if (moveX < 50)
-		{
-			// IA.Movimento(moveX - speed, 0.0, 0.0);
-			Pecas.Mmovimenta(moveX - speed);
-		}
-
-		if (moveX <= -10)
-		{
-			lado = true;
-		}
-		moveX--;
-		std::cout << "valor em x: " << moveX << std::endl;
-
-	}*/
-
-
-
-	//Frame logic
-	//Update();
-
-	//Render();
-	//Run frame one more time
-
-	glutTimerFunc(1000 / FPS, runMainLoop, val);
 }
