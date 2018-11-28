@@ -9,14 +9,32 @@ void Scene::Update()
 	}
 }
 
+void Scene::GetKeyboardInputUP(unsigned char key, int x, int y)
+{
+	if (estadosJogo.getJogo())
+	{
+		switch (key)
+		{
+		case 'a':
+			jogador.toRight = false;
+			jogador.toLeft = false;
+			break;
+		case 'd':
+			jogador.toLeft = false;
+			jogador.toRight = false;
+			break;
+		}
+	}
+}
+
 void Scene::GetKeyboardInput(unsigned char key, int x, int y)
 {
 	if (estadosJogo.getMenuAtivo())
 	{
 		switch (key)
 		{
+		case 264:
 		case 's':
-		case 'S':
 			if (estadosJogo.getAuxMenu() == 1)
 			{
 				estadosJogo.setAuxMenu(0);
@@ -27,8 +45,8 @@ void Scene::GetKeyboardInput(unsigned char key, int x, int y)
 			}
 			break;
 
+		case 265:
 		case 'w':
-		case 'W':
 			if (estadosJogo.getAuxMenu() == 1)
 			{
 				estadosJogo.setAuxMenu(0);
@@ -170,24 +188,6 @@ void Scene::GetKeyboardInput(unsigned char key, int x, int y)
 		}
 	}
 
-}
-
-void Scene::GetKeyboardInputUP(unsigned char key, int x, int y)
-{
-	if (estadosJogo.getJogo())
-	{
-		switch (key)
-		{
-		case 'a':
-			jogador.toRight = false;
-			jogador.toLeft = false;
-			break;
-		case 'd':
-			jogador.toLeft = false;
-			jogador.toRight = false;
-			break;
-		}
-	}
 }
 
 void Scene::GetSpecialKeyboardInput(unsigned char key, int x, int y)
