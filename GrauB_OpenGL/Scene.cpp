@@ -2,20 +2,84 @@
 
 void Scene::Update()
 {
+	//Controle das variáveis de estado e fluxo do jogo
+	if (estadosJogo.getJogo())
+	{
+
+	}
+
+	//Condicional para quando o usuario deseja sair do jogo
 	if (estadosJogo.getSairJogo())
 	{
 		exit(0);
-	}
-
-	if (estadosJogo.getJogo())
-	{
-		
 	}
 }
 
 void Scene::GetKeyboardInput(unsigned char key, int x, int y)
 {
 	if (estadosJogo.getMenuAtivo())
+	{
+		switch (key)
+		{
+		case 264:
+		case 's':
+			if (estadosJogo.getAuxMenu() == 1)
+			{
+				estadosJogo.setAuxMenu(0);
+			}
+			else
+			{
+				estadosJogo.setAuxMenu(1);
+			}
+			break;
+
+		case 265:
+		case 'w':
+			if (estadosJogo.getAuxMenu() == 1)
+			{
+				estadosJogo.setAuxMenu(0);
+			}
+			else
+			{
+				estadosJogo.setAuxMenu(1);
+			}
+			break;
+
+		case 13:
+			if (estadosJogo.getAuxMenu() == 1)
+			{
+				Start();
+
+				estadosJogo.setJogo(true);
+
+				SpecifyViewParameters();
+
+				estadosJogo.setMenuAtivo(false);
+			}
+			else
+			{
+				estadosJogo.setSairJogo(true);
+			}
+			break;
+		}
+	}
+	else if (estadosJogo.getJogo())
+	{
+		switch (key)
+		{
+		case 'a':
+			if (jogador.x > -39) jogador.Movimenta(-1);
+			break;
+		case 'd':
+			if (jogador.x < 39) jogador.Movimenta(1);
+			break;
+		case 27:
+			estadosJogo.setJogo(false);
+			estadosJogo.setPause(true);
+			break;
+		}
+	}
+	else if (estadosJogo.getOverAtivo())
 	{
 		switch (key)
 		{
@@ -43,31 +107,69 @@ void Scene::GetKeyboardInput(unsigned char key, int x, int y)
 
 		case 13:
 			if (estadosJogo.getAuxMenu() == 1)
-			{				
+			{
+				Start();
+
 				estadosJogo.setJogo(true);
 
 				SpecifyViewParameters();
 
-				estadosJogo.setMenuAtivo(false);				
+				estadosJogo.setOverAtivo(false);
 			}
 			else
 			{
-				estadosJogo.setSairJogo(true);
+				estadosJogo.setMenuAtivo(true);
+
+				estadosJogo.setOverAtivo(false);
 			}
 			break;
 		}
 	}
-	else if (estadosJogo.getJogo())
+	else if (estadosJogo.getPause())
 	{
 		switch (key)
 		{
-		case 'a':
-			if (jogador.x > -39) jogador.Movimenta(-1);
+		case 's':
+			if (estadosJogo.getAuxMenu() == 1)
+			{
+				estadosJogo.setAuxMenu(0);
+			}
+			else
+			{
+				estadosJogo.setAuxMenu(1);
+			}
 			break;
-		case 'd':
-			if (jogador.x < 39) jogador.Movimenta(1);
+
+		case 'w':
+			if (estadosJogo.getAuxMenu() == 1)
+			{
+				estadosJogo.setAuxMenu(0);
+			}
+			else
+			{
+				estadosJogo.setAuxMenu(1);
+			}
+			break;
+
+		case 13:
+			if (estadosJogo.getAuxMenu() == 1)
+			{
+				estadosJogo.setJogo(true);
+
+				SpecifyViewParameters();
+
+				estadosJogo.setPause(false);
+			}
+			else
+			{
+				estadosJogo.setMenuAtivo(true);
+
+				estadosJogo.setPause(false);
+			}
+			break;
 		}
 	}
+
 }
 
 void Scene::GetMouseInput(int button, int state, int x, int y)
@@ -196,7 +298,7 @@ void Scene::SpecifyViewParameters()
 void Scene::Render()
 {
 	// Limpa a janela e o depth buffer
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	if (estadosJogo.getJogo())
 	{
@@ -223,17 +325,25 @@ void Scene::Render()
 		EscreveVidas();
 		EscreveKills();
 		EscreveFuel();
-		
+
 		Playing();
 	}
 	else if (estadosJogo.getMenuAtivo())
 	{
 		MainMenu();
-	}	
+	}
+	else if (estadosJogo.getOverAtivo())
+	{
+		GameOver();
+	}
+	else if (estadosJogo.getPause())
+	{
+		Pause();
+	}
 }
 
 void Scene::Start()
-{		
+{
 	angle = 35;
 	cubeAngle = 0;
 	cubeX = 0;
@@ -284,11 +394,18 @@ void Scene::MainMenu()
 	{
 		estadosJogo.Titulo(estadosJogo.setaSelecao.data(), estadosJogo.setaSelecao.size(), 300, 270);
 	}
+
 	estadosJogo.Titulo(estadosJogo.tituloJogo.data(), estadosJogo.tituloJogo.size(), 320, 420);
 }
 
 void Scene::Playing()
-{		
+{
+	if (jogador.vidas <= 0 || jogador.combustivel <= 0)
+	{
+		estadosJogo.setJogo(false);
+		estadosJogo.setOverAtivo(true);
+	}
+
 	jogador.combustivel -= (100.0f / 30.0f) / 60.0f;
 
 	for (int i = 0; i < 5; i++)
@@ -371,10 +488,26 @@ void Scene::Playing()
 
 void Scene::Pause()
 {
+	estadosJogo.pause();
 }
 
 void Scene::GameOver()
 {
+	glColor3f(1.0, 1.0, 1.0);
+	estadosJogo.Texto(estadosJogo.novoJogo.data(), estadosJogo.novoJogo.size(), 352, 270);
+	estadosJogo.Texto(estadosJogo.sairJogo.data(), estadosJogo.sairJogo.size(), 350, 220);
+
+	if (estadosJogo.getAuxMenu() == 0)
+	{
+		estadosJogo.Titulo(estadosJogo.setaSelecao.data(), estadosJogo.setaSelecao.size(), 300, 220);
+	}
+	else
+	{
+		estadosJogo.Titulo(estadosJogo.setaSelecao.data(), estadosJogo.setaSelecao.size(), 300, 270);
+	}
+
+	glColor3f(1.0, 0.0, 0.0);
+	estadosJogo.Titulo(estadosJogo._gameOver.data(), estadosJogo._gameOver.size(), 330, 420);
 }
 
 void Scene::Help()

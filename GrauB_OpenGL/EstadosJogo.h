@@ -10,7 +10,7 @@ class EstadosJogo
 {
 private:
 	
-	bool menuAtivo, over, jogo, saiu;
+	bool menuAtivo, over, jogo, saiu, paused;
 	int aux;
 
 public:
@@ -18,12 +18,13 @@ public:
 	EstadosJogo();
 
 	string setaSelecao, tituloJogo;
-	string novoJogo, sairJogo, continuar, _gameOver;
+	string novoJogo, sairJogo, continuar, _gameOver, restart, pauseText;
 
 	void Texto(const char *text, int length, int x, int y);
 	void Titulo(const char *text, int length, int x, int y);
 	void menu();
 	void gameOver();
+	void pause();
 
 	bool getMenuAtivo();
 	void setMenuAtivo(bool menu);
@@ -36,6 +37,9 @@ public:
 
 	bool getJogo();
 	void setJogo(bool sair);
+
+	bool getPause();
+	void setPause(bool pause);
 
 	int getAuxMenu();
 	void setAuxMenu(int _aux);
