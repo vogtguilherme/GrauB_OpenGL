@@ -80,21 +80,31 @@ void Scene::GetKeyboardInput(unsigned char key, int x, int y)
 		switch (key)
 		{
 		case 'a':
+		case 'A':
 			jogador.toRight = false;
 			jogador.toLeft = true;
 			break;
+
 		case 'd':
+		case 'D':
 			jogador.toLeft = false;
 			jogador.toRight = true;
 			break;
-		}
 
-		switch (key)
+		/*switch (key)
 		{
 		case 27:
 			estadosJogo.setJogo(false);
 			estadosJogo.setPause(true);
 			break;
+		}*/
+
+		}
+
+		if (key == 27)
+		{
+			estadosJogo.setJogo(false);
+			estadosJogo.setPause(true);
 		}
 	}
 	else if (estadosJogo.getOverAtivo())
@@ -232,7 +242,7 @@ void Scene::GetMouseInput(int button, int state, int x, int y)
 				{
 					if (bullets[i].usada == false)
 					{
-						bullets[i].CriaBullet(jogador.x, jogador.y, jogador.z - 10);
+						bullets[i].CriaBullet(jogador.smooth_x, jogador.y, jogador.z - 10);
 						bullets[i].usada = true;
 						break;
 					}
@@ -465,6 +475,8 @@ void Scene::Playing()
 		estadosJogo.setJogo(false);
 		estadosJogo.setOverAtivo(true);
 	}
+
+	jogador.Update();
 
 	jogador.combustivel -= (100.0f / 30.0f) / 60.0f;
 
