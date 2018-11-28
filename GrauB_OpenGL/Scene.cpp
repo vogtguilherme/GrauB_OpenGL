@@ -17,7 +17,7 @@ void Scene::Update()
 
 void Scene::GetKeyboardInput(unsigned char key, int x, int y)
 {
-	if (estadosJogo.getMenuAtivo())
+	if (estadosJogo.getMenuAtivo() || estadosJogo.getOverAtivo())
 	{
 		switch (key)
 		{
@@ -68,6 +68,36 @@ void Scene::GetKeyboardInput(unsigned char key, int x, int y)
 			break;
 		case 'd':
 			if (jogador.x < 39) jogador.Movimenta(1);
+		}
+	}
+}
+
+void Scene::GetSpecialKeyboardInput(unsigned char key, int x, int y)
+{
+	if (estadosJogo.getMenuAtivo() || estadosJogo.getOverAtivo())
+	{
+		switch (key)
+		{
+		case GLUT_KEY_DOWN:
+			if (estadosJogo.getAuxMenu() == 1)
+			{
+				estadosJogo.setAuxMenu(0);
+			}
+			else
+			{
+				estadosJogo.setAuxMenu(1);
+			}
+			break;
+		case GLUT_KEY_UP:
+			if (estadosJogo.getAuxMenu() == 1)
+			{
+				estadosJogo.setAuxMenu(0);
+			}
+			else
+			{
+				estadosJogo.setAuxMenu(1);
+			}			
+			break;
 		}
 	}
 }
