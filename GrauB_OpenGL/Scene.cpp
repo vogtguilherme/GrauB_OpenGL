@@ -2,7 +2,10 @@
 
 void Scene::Update()
 {
-	Playing();	
+	if (estadosJogo.getSairJogo())
+	{
+		exit(0);
+	}
 }
 
 void Scene::GetKeyboardInput(unsigned char key, int x, int y)

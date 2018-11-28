@@ -55,11 +55,9 @@ int main(int argc, char **argv)
 
 void runMainLoop(int val)
 {
-	//game.Update();
-
 	Desenha();
 
-	//std::cout << "FPS: " << game.FPS << std::endl;
+	game.Update();
 
 	glutTimerFunc(1000 / game.FPS, runMainLoop, val);
 }
