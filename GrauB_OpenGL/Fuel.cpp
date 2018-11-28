@@ -11,6 +11,7 @@ void Fuel::DesenhaFuel()
 {
 	glPushMatrix();
 	glTranslatef(x, y, z);
+	glTranslatef(1, 1, 3);
 	glColor3f(1.0f, 0.0f, 0.25f);
 	glutSolidCube(3);
 	glPopMatrix();

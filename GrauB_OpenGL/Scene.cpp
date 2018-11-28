@@ -15,32 +15,14 @@ void Scene::Update()
 	}
 }
 
-void Scene::GetKeyboardInputUP(unsigned char key, int x, int y)
-{
-	if (estadosJogo.getJogo())
-	{
-		switch (key)
-		{
-		case 'a':
-			jogador.toRight = false;
-			jogador.toLeft = false;
-			break;
-		case 'd':
-			jogador.toLeft = false;
-			jogador.toRight = false;
-			break;
-		}
-	}
-}
-
 void Scene::GetKeyboardInput(unsigned char key, int x, int y)
 {
 	if (estadosJogo.getMenuAtivo())
 	{
 		switch (key)
 		{
-		case 264:
 		case 's':
+		case 'S':
 			if (estadosJogo.getAuxMenu() == 1)
 			{
 				estadosJogo.setAuxMenu(0);
@@ -51,8 +33,8 @@ void Scene::GetKeyboardInput(unsigned char key, int x, int y)
 			}
 			break;
 
-		case 265:
 		case 'w':
+		case 'W':
 			if (estadosJogo.getAuxMenu() == 1)
 			{
 				estadosJogo.setAuxMenu(0);
@@ -86,17 +68,13 @@ void Scene::GetKeyboardInput(unsigned char key, int x, int y)
 		switch (key)
 		{
 		case 'a':
-			jogador.toRight = false;
-			jogador.toLeft = true;
+		case 'A':
+			if (jogador.x > -39) jogador.Movimenta(-1);
 			break;
 		case 'd':
-			jogador.toLeft = false;
-			jogador.toRight = true;
+		case 'D':
+			if (jogador.x < 39) jogador.Movimenta(1);
 			break;
-		}
-
-		switch (key)
-		{
 		case 27:
 			estadosJogo.setJogo(false);
 			estadosJogo.setPause(true);
@@ -220,7 +198,7 @@ void Scene::GetSpecialKeyboardInput(unsigned char key, int x, int y)
 			else
 			{
 				estadosJogo.setAuxMenu(1);
-			}
+			}			
 			break;
 		}
 	}
@@ -238,7 +216,7 @@ void Scene::GetMouseInput(int button, int state, int x, int y)
 				{
 					if (bullets[i].usada == false)
 					{
-						bullets[i].CriaBullet(jogador.smooth_x, jogador.y, jogador.z - 10);
+						bullets[i].CriaBullet(jogador.x, jogador.y, jogador.z - 10);
 						bullets[i].usada = true;
 						break;
 					}
@@ -358,10 +336,16 @@ void Scene::Render()
 	{
 		Pecas.criaMar();
 		Pecas.CriaParedes();
+		Pecas.CriaMontanhas();
 
 		for (int i = 0; i < 5; i++)
 		{
-			IA[i].DesenhaInimigo();
+			barcos[i].DesenhaInimigo();
+		}
+
+		for (int i = 0; i < 5; i++)
+		{
+			helicoptero[i].DesenhaHelecoptero();
 		}
 
 		for (int i = 0; i < 10; i++)
@@ -421,8 +405,14 @@ void Scene::Start()
 
 	for (int i = 0; i < 5; i++)
 	{
-		IA[i].CriaInimigo(rand() % 80 - 40, 5.0f, -1000 * (i + 1));
-		IA[i].speed = 1.0f;
+		barcos[i].CriaInimigo(rand() % 80 - 40, 5.0f, -1000 * (i + 1));
+		barcos[i].speed = 1.0f;
+	}
+
+	for (int i = 0; i < 5; i++)
+	{
+		helicoptero[i].CriaHelecoptero(rand() % 70 - 35, 5.0f, -1100 * (i + 1));
+		helicoptero[i].speed = 1.0f;
 	}
 
 	for (int i = 0; i < 10; i++)
@@ -454,8 +444,6 @@ void Scene::MainMenu()
 
 void Scene::Playing()
 {
-	jogador.Update();
-
 	if (jogador.vidas <= 0 || jogador.combustivel <= 0)
 	{
 		estadosJogo.setJogo(false);
@@ -464,22 +452,27 @@ void Scene::Playing()
 
 	jogador.combustivel -= (100.0f / 30.0f) / 60.0f;
 
+	//coptero
 	for (int i = 0; i < 5; i++)
 	{
-		if (IA[i].z < 100) IA[i].Movimento(0, IA[i].speed * speed);
+		if (helicoptero[i].z < 100)
+			helicoptero[i].Movimento(0, helicoptero[i].speed*speed);
 		else
 		{
-			IA[i].CriaInimigo(rand() % 80 - 40, IA[i].y, -4000);
-			if (IA[i].speed < 20) IA[i].speed += IA[i].speed * 0.1f;
+			helicoptero[i].CriaHelecoptero(rand() % 70 - 30, helicoptero[i].y, -3000);
+			
+			if (helicoptero[i].speed < 20) 
+				helicoptero[i].speed += helicoptero[i].speed*0.2f;
 		}
 
-		if (jogador.x - 1.5f < IA[i].x + 10 && jogador.x + 1.5f > IA[i].x - 10)
+		//sistema de colisao do player com o objeto
+		if (jogador.x - 1.5f < helicoptero[i].x + 10 && jogador.x + 1.5f > helicoptero[i].x - 10)
 		{
-			if (jogador.y - 1.5f < IA[i].y + 10 && jogador.y + 1.5f > IA[i].y - 10)
+			if (jogador.y - 1.5f < helicoptero[i].y + 10 && jogador.y + 1.5f > helicoptero[i].y - 10)
 			{
-				if (jogador.z - 1.5f < IA[i].z + 10 && jogador.z + 1.5f > IA[i].z - 10)
+				if (jogador.z - 1.5f < helicoptero[i].z + 10 && jogador.z + 1.5f > helicoptero[i].z - 10)
 				{
-					IA[i].CriaInimigo(50000, IA[i].y, IA[i].z);
+					helicoptero[i].CriaHelecoptero(40000, helicoptero[i].y, helicoptero[i].z);
 
 					jogador.vidas--;
 				}
@@ -487,12 +480,39 @@ void Scene::Playing()
 		}
 	}
 
+	//barquinho
+	for (int i = 0; i < 5; i++)
+	{
+		if (barcos[i].z < 100) 
+			barcos[i].Movimento(0, barcos[i].speed * speed);
+		else
+		{
+			barcos[i].CriaInimigo(rand() % 80 - 40, barcos[i].y, -4000);
+			if (barcos[i].speed < 20)
+				barcos[i].speed += barcos[i].speed * 0.1f;
+		}
+		//colisao do player com o objeto barquinho
+		if (jogador.x - 1.5f < barcos[i].x + 10 && jogador.x + 1.5f > barcos[i].x - 10)
+		{
+			if (jogador.y - 1.5f < barcos[i].y + 10 && jogador.y + 1.5f > barcos[i].y - 10)
+			{
+				if (jogador.z - 1.5f < barcos[i].z + 10 && jogador.z + 1.5f > barcos[i].z - 10)
+				{
+					barcos[i].CriaInimigo(50000, barcos[i].y, barcos[i].z);
+
+					jogador.vidas--;
+				}
+			}
+		}
+	}
+	//gasolina
 	for (int i = 0; i < 3; i++)
 	{
 		fuel[i].Movimenta(0, fuel[i].speed);
 
-		if (fuel[i].z > 100) fuel[i].CriaFuel(rand() % 70 - 35, fuel[i].y, -4000);
+		if (fuel[i].z > 100) fuel[i].CriaFuel(rand() % 75 - 20, fuel[i].y, -4000);
 
+		//colisao do player com o combustivel
 		if (jogador.x - 1.5f < fuel[i].x + 10 && jogador.x + 1.5f > fuel[i].x - 10)
 		{
 			if (jogador.y - 1.5f < fuel[i].y + 10 && jogador.y + 1.5f > fuel[i].y - 10)
@@ -507,7 +527,7 @@ void Scene::Playing()
 			}
 		}
 	}
-
+	//bala
 	for (int j = 0; j < 10; j++)
 	{
 		if (bullets[j].usada == true)
@@ -520,15 +540,16 @@ void Scene::Playing()
 				bullets[j].usada = false;
 			}
 
+			//colisor da bala com o barco
 			for (int i = 0; i < 5; i++)
 			{
-				if (bullets[j].x - 0.5f < IA[i].x + 10 && bullets[j].x + 0.5f > IA[i].x - 10)
+				if (bullets[j].x - 0.5f < barcos[i].x + 10 && bullets[j].x + 0.5f > barcos[i].x - 10)
 				{
-					if (bullets[j].y - 0.5f < IA[i].y + 10 && bullets[j].y + 0.5f > IA[i].y - 10)
+					if (bullets[j].y - 0.5f < barcos[i].y + 10 && bullets[j].y + 0.5f > barcos[i].y - 10)
 					{
-						if (bullets[j].z - 0.5f < IA[i].z + 10 && bullets[j].z + 0.5f > IA[i].z - 10)
+						if (bullets[j].z - 0.5f < barcos[i].z + 10 && bullets[j].z + 0.5f > barcos[i].z - 10)
 						{
-							IA[i].CriaInimigo(50000, IA[i].y, IA[i].z);
+							barcos[i].CriaInimigo(50000, barcos[i].y, barcos[i].z);
 
 							bullets[j].CriaBullet(0, jogador.y, 1000);
 							bullets[j].usada = false;
@@ -538,6 +559,27 @@ void Scene::Playing()
 					}
 				}
 			}
+
+			//colisor da bala no coptero
+			for (int i = 0; i < 5; i++)
+			{
+				if (bullets[j].x - 0.5f < helicoptero[i].x + 10 && bullets[j].x + 0.5f > helicoptero[i].x - 10)
+				{
+					if (bullets[j].y - 0.5f < helicoptero[i].y + 10 && bullets[j].y + 0.5f > helicoptero[i].y - 10)
+					{
+						if (bullets[j].z - 0.5f < helicoptero[i].z + 10 && bullets[j].z + 0.5f > helicoptero[i].z - 10)
+						{
+							helicoptero[i].CriaHelecoptero(50000, helicoptero[i].y, helicoptero[i].z);
+
+							bullets[j].CriaBullet(0, jogador.y, 1000);
+							bullets[j].usada = false;
+
+							jogador.acertos++;
+						}
+					}
+				}
+			}
+
 		}
 	}
 }

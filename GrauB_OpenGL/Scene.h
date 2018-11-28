@@ -5,7 +5,8 @@
 
 #include "Bullet.h"
 #include "Jogador.h"
-#include "Inimigo.h"
+#include "Barco.h"
+#include "Helicoptero.h"
 #include "Objetos.h"
 #include "Fuel.h"
 
@@ -25,7 +26,6 @@ public:
 	void Start();
 	void Update();
 	void GetKeyboardInput(unsigned char key, int x, int y);
-	void GetKeyboardInputUP(unsigned char key, int x, int y);
 	void GetSpecialKeyboardInput(unsigned char key, int x, int y);
 	void GetMouseInput(int button, int state, int x, int y);
 	void SetWindowSize(GLsizei w, GLsizei h);
@@ -46,11 +46,14 @@ public:
 
 	Bullet bullets[10];
 	Jogador jogador;
-	Inimigo IA[5];
+	Barco barcos[5];
+	Helicoptero helicoptero[5];
 	Fuel fuel[3];
 	Objetos Pecas;
 	
 	EstadosJogo estadosJogo;
+
+	bool lado = true;
 
 	float speed = 5.0f;
 };
