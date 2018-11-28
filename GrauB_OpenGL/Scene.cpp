@@ -2,8 +2,6 @@
 
 void Scene::Update()
 {
-	Render();
-
 	Playing();
 }
 
@@ -41,6 +39,30 @@ void Scene::GetMouseInput(int button, int state, int x, int y)
 			}
 		}
 }
+
+void Scene::EscreveVidas(void)
+{
+	char texto[8] = "LIFES: ";
+	char teste[20];
+	int i = 0;
+
+	//Conversão de inteiro para string, pois a OpenGL só escreve string ou char
+	sprintf_s(teste, "%d", jogador.vidas);
+
+	//Cor da fonte
+	glColor3ub(255, 255, 255);
+	//glColor3f(1,1,1);
+	//Posição da palavra
+	glRasterPos3f(35.0f, 45.0f, -10.0f);
+
+	//Uso do "for" para escrever mais de um caracter
+	for (i = 0; i <= strlen(texto); i++)
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, texto[i]);
+
+	for (i = 0; i <= strlen(teste); i++)
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, teste[i]);
+}
+
 
 void Scene::SetWindowSize(GLsizei w, GLsizei h)
 {
@@ -111,8 +133,8 @@ void Scene::Render()
 
 	jogador.Desenhajogador();
 
-	/*EscreveVidas();
-	EscreveKills();
+	EscreveVidas();
+	/*EscreveKills();
 	EscreveFuel();*/
 
 	glutSwapBuffers();
@@ -160,7 +182,7 @@ void Scene::MainMenu()
 {
 }
 
-void Scene::Playing(void)
+void Scene::Playing()
 {
 	jogador.combustivel -= (100.0f / 30.0f) / 60.0f;
 
@@ -242,39 +264,6 @@ void Scene::Playing(void)
 			}
 		}
 	}
-
-
-	/*
-	if (lado == true)
-	{
-	if (moveX < 0)
-	{
-	//IA.Movimento(moveX - speed, 0.0f, 0.0f);
-	Pecas.Mmovimenta(moveX - speed);
-	}
-	if (moveX >= 10)
-	{
-	lado = false;
-	}
-	moveX++;
-	std::cout << "valor em x: " << moveX << std::endl;
-
-	}
-	if (lado == false) {
-	if (moveX < 50)
-	{
-	// IA.Movimento(moveX - speed, 0.0, 0.0);
-	Pecas.Mmovimenta(moveX - speed);
-	}
-
-	if (moveX <= -10)
-	{
-	lado = true;
-	}
-	moveX--;
-	std::cout << "valor em x: " << moveX << std::endl;
-
-	}*/
 }
 
 void Scene::Pause()

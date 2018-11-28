@@ -27,8 +27,10 @@ public:
 	void SetWindowSize(GLsizei w, GLsizei h);
 	void SpecifyViewParameters();
 
+	void EscreveVidas(void);
+
 	void MainMenu();
-	void Playing(void);
+	void Playing();
 	void Pause();
 	void GameOver();
 	void Help();
@@ -36,7 +38,7 @@ public:
 	Scene();
 	~Scene();
 
-	Bullet bullets[1];
+	Bullet bullets[10];
 	Jogador jogador;
 	Inimigo IA[5];
 	Fuel fuel[3];
