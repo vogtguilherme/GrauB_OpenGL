@@ -17,7 +17,7 @@ void Scene::Update()
 
 void Scene::GetKeyboardInput(unsigned char key, int x, int y)
 {
-	if (estadosJogo.getMenuAtivo())
+	if (estadosJogo.getMenuAtivo() || estadosJogo.getOverAtivo())
 	{
 		switch (key)
 		{
@@ -170,6 +170,36 @@ void Scene::GetKeyboardInput(unsigned char key, int x, int y)
 		}
 	}
 
+}
+
+void Scene::GetSpecialKeyboardInput(unsigned char key, int x, int y)
+{
+	if (estadosJogo.getMenuAtivo() || estadosJogo.getOverAtivo())
+	{
+		switch (key)
+		{
+		case GLUT_KEY_DOWN:
+			if (estadosJogo.getAuxMenu() == 1)
+			{
+				estadosJogo.setAuxMenu(0);
+			}
+			else
+			{
+				estadosJogo.setAuxMenu(1);
+			}
+			break;
+		case GLUT_KEY_UP:
+			if (estadosJogo.getAuxMenu() == 1)
+			{
+				estadosJogo.setAuxMenu(0);
+			}
+			else
+			{
+				estadosJogo.setAuxMenu(1);
+			}			
+			break;
+		}
+	}
 }
 
 void Scene::GetMouseInput(int button, int state, int x, int y)
