@@ -9,6 +9,13 @@
 #include "Objetos.h"
 #include "Fuel.h"
 
+#include "EstadosJogo.h"
+
+enum States
+{
+	MAIN_MENU, HELP, PLAYING, PAUSED, GAMEOVER
+};
+
 class Scene
 {
 public:
@@ -28,6 +35,8 @@ public:
 	void SpecifyViewParameters();
 
 	void EscreveVidas(void);
+	void EscreveKills(void);
+	void EscreveFuel(void);
 
 	void MainMenu();
 	void Playing();
@@ -42,7 +51,10 @@ public:
 	Jogador jogador;
 	Inimigo IA[5];
 	Fuel fuel[3];
-	Objetos Pecas;	
+	Objetos Pecas;
+	
+	EstadosJogo estadosJogo;
+	States estadoAtual;
 
 	bool lado = true;
 

@@ -2,19 +2,62 @@
 
 void Scene::Update()
 {
-	Playing();
+	Playing();	
 }
 
 void Scene::GetKeyboardInput(unsigned char key, int x, int y)
 {
-	switch (key)
+	if (estadosJogo.getMenuAtivo())
 	{
-	case 'a':
-		if (jogador.x > -39) jogador.Movimenta(-1);
-		break;
-	case 'd':
-		if (jogador.x < 39) jogador.Movimenta(1);
-		break;
+		switch (key)
+		{
+		case 's':
+			if (estadosJogo.getAuxMenu() == 1)
+			{
+				estadosJogo.setAuxMenu(0);
+			}
+			else
+			{
+				estadosJogo.setAuxMenu(1);
+			}
+			break;
+
+		case 'w':
+			if (estadosJogo.getAuxMenu() == 1)
+			{
+				estadosJogo.setAuxMenu(0);
+			}
+			else
+			{
+				estadosJogo.setAuxMenu(1);
+			}
+			break;
+
+		case 13:
+			if (estadosJogo.getAuxMenu() == 1)
+			{
+				estadosJogo.setJogo(true);
+				estadosJogo.setMenuAtivo(false);
+				
+				Start();				
+			}
+			else
+			{
+				estadosJogo.setSairJogo(true);
+			}
+			break;
+		}
+	}
+	else if (estadosJogo.getJogo())
+	{
+		switch (key)
+		{
+		case 'a':
+			if (jogador.x > -39) jogador.Movimenta(-1);
+			break;
+		case 'd':
+			if (jogador.x < 39) jogador.Movimenta(1);
+		}
 	}
 
 	glutPostRedisplay();
@@ -31,9 +74,6 @@ void Scene::GetMouseInput(int button, int state, int x, int y)
 				{
 					bullets[i].CriaBullet(jogador.x, jogador.y, jogador.z - 10);
 					bullets[i].usada = true;
-
-					std::cout << "Taca Fogo";
-
 					break;
 				}
 			}
@@ -54,6 +94,52 @@ void Scene::EscreveVidas(void)
 	//glColor3f(1,1,1);
 	//Posição da palavra
 	glRasterPos3f(35.0f, 45.0f, -10.0f);
+
+	//Uso do "for" para escrever mais de um caracter
+	for (i = 0; i <= strlen(texto); i++)
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, texto[i]);
+
+	for (i = 0; i <= strlen(teste); i++)
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, teste[i]);
+}
+
+void Scene::EscreveKills(void)
+{
+	char texto[8] = "KILLS:";
+	char teste[20];
+	int i = 0;
+
+	//Conversão de inteiro para string, pois a OpenGL só escreve string ou char
+	sprintf_s(teste, "%d", jogador.acertos);
+
+	//Cor da fonte
+	glColor3ub(255, 255, 255);
+	//glColor3f(1,1,1);
+	//Posição da palavra
+	glRasterPos3f(35.0f, 43.0f, -10.0f);
+
+	//Uso do "for" para escrever mais de um caracter
+	for (i = 0; i <= strlen(texto); i++)
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, texto[i]);
+
+	for (i = 0; i <= strlen(teste); i++)
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, teste[i]);
+}
+
+void Scene::EscreveFuel(void)
+{
+	char texto[8] = "FUEL:";
+	char teste[20];
+	int i = 0;
+
+	//Conversão de inteiro para string, pois a OpenGL só escreve string ou char
+	sprintf_s(teste, "%d", (int)jogador.combustivel);
+
+	//Cor da fonte
+	glColor3ub(255, 255, 255);
+	//glColor3f(1,1,1);
+	//Posição da palavra
+	glRasterPos3f(35.0f, 41.0f, -10.0f);
 
 	//Uso do "for" para escrever mais de um caracter
 	for (i = 0; i <= strlen(texto); i++)
@@ -99,50 +185,51 @@ void Scene::SpecifyViewParameters()
 void Scene::Render()
 {
 	// Limpa a janela e o depth buffer
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 
-	//glColor3f(0.0f, 0.0f, 1.0f);
-
-	// Desenha uma esfera sólida
-	//glutSolidSphere(50.0f, 100, 100);
-
-	Pecas.criaMar();
-	Pecas.CriaParedes();
-
-	/*
-	glRotatef(cubeAngle, cubeX, cubeY, cubeZ);
-	glTranslatef(moveX, moveY, moveZ);
-	glutSolidCube(50);
-	*/
-
-	for (int i = 0; i < 5; i++)
+	if (estadosJogo.getJogo())
 	{
-		IA[i].DesenhaInimigo();
+		Pecas.criaMar();
+		Pecas.CriaParedes();
+
+		for (int i = 0; i < 5; i++)
+		{
+			IA[i].DesenhaInimigo();
+		}
+
+		for (int i = 0; i < 10; i++)
+		{
+			bullets[i].DesenhaBullet();
+		}
+
+		for (int i = 0; i < 3; i++)
+		{
+			fuel[i].DesenhaFuel();
+		}
+
+		jogador.Desenhajogador();
+
+		EscreveVidas();
+		EscreveKills();
+		EscreveFuel();
+
+		Playing();
 	}
 
-	for (int i = 0; i < 10; i++)
+	else if (estadosJogo.getMenuAtivo())
 	{
-		bullets[i].DesenhaBullet();
+		MainMenu();
 	}
-
-	for (int i = 0; i < 3; i++)
-	{
-		fuel[i].DesenhaFuel();
-
-	}
-
-	jogador.Desenhajogador();
-
-	EscreveVidas();
-	/*EscreveKills();
-	EscreveFuel();*/
 
 	glutSwapBuffers();
 
+	glutPostRedisplay();
 }
 
 void Scene::Start()
 {
+	estadoAtual = MAIN_MENU;
+	
 	angle = 35;
 	cubeAngle = 0;
 	cubeX = 0;
@@ -180,6 +267,20 @@ void Scene::Start()
 
 void Scene::MainMenu()
 {
+	glColor3f(1.0, 1.0, 1.0);
+	estadosJogo.Texto(estadosJogo.novoJogo.data(), estadosJogo.novoJogo.size(), 352, 270);
+	estadosJogo.Texto(estadosJogo.sairJogo.data(), estadosJogo.sairJogo.size(), 350, 220);
+
+	if (estadosJogo.getAuxMenu() == 0)
+	{
+		estadosJogo.Titulo(estadosJogo.setaSelecao.data(), estadosJogo.setaSelecao.size(), 300, 220);
+	}
+
+	else
+	{
+		estadosJogo.Titulo(estadosJogo.setaSelecao.data(), estadosJogo.setaSelecao.size(), 300, 270);
+	}
+	estadosJogo.Titulo(estadosJogo.tituloJogo.data(), estadosJogo.tituloJogo.size(), 320, 420);
 }
 
 void Scene::Playing()
@@ -201,8 +302,6 @@ void Scene::Playing()
 			{
 				if (jogador.z - 1.5f < IA[i].z + 10 && jogador.z + 1.5f > IA[i].z - 10)
 				{
-					//std::cout << "BAteu Carai z";
-
 					IA[i].CriaInimigo(50000, IA[i].y, IA[i].z);
 
 					jogador.vidas--;

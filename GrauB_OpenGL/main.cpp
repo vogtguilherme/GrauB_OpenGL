@@ -26,7 +26,7 @@ void GerenciaTeclas(unsigned char key, int x, int y)
 
 void Inicializa(void)
 {
-	game.Start();
+	//game.Start();
 }
 
 int main(int argc, char **argv)
@@ -55,8 +55,9 @@ int main(int argc, char **argv)
 
 void runMainLoop(int val)
 {
+	//game.Update();
+
 	Desenha();
-	game.Update();
 
 	//std::cout << "FPS: " << game.FPS << std::endl;
 
