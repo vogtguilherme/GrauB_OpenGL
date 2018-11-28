@@ -230,9 +230,7 @@ void Scene::Render()
 }
 
 void Scene::Start()
-{
-	estadoAtual = MAIN_MENU;
-	
+{	
 	angle = 35;
 	cubeAngle = 0;
 	cubeX = 0;

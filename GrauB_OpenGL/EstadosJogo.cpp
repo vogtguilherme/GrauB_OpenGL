@@ -5,6 +5,7 @@ EstadosJogo::EstadosJogo()
 	menuAtivo = true;
 	over = false;
 	jogo = false;
+
 	novoJogo = "New Game";
 	sairJogo = "Quit Game";
 	continuar = "Continue";
