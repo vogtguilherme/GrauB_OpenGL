@@ -11,11 +11,6 @@
 
 #include "EstadosJogo.h"
 
-enum States
-{
-	MAIN_MENU, HELP, PLAYING, PAUSED, GAMEOVER
-};
-
 class Scene
 {
 public:
@@ -54,7 +49,6 @@ public:
 	Objetos Pecas;
 	
 	EstadosJogo estadosJogo;
-	States estadoAtual;
 
 	bool lado = true;
 

@@ -25,8 +25,8 @@ void GerenciaTeclas(unsigned char key, int x, int y)
 }
 
 void Inicializa(void)
-{
-	//game.Start();
+{	
+	game.Start();
 }
 
 int main(int argc, char **argv)
@@ -45,7 +45,7 @@ int main(int argc, char **argv)
 	glutMouseFunc(GerenciaMouse);
 	glutKeyboardFunc(GerenciaTeclas);
 
-	Inicializa();
+	//Inicializa();
 
 	//Set main loop
 	glutTimerFunc(1000 / game.FPS, runMainLoop, 0);

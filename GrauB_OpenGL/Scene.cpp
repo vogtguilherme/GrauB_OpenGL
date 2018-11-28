@@ -10,7 +10,7 @@ void Scene::Update()
 
 void Scene::GetKeyboardInput(unsigned char key, int x, int y)
 {
-	if (estadosJogo.getMenuAtivo())
+	/*if (estadosJogo.getMenuAtivo())
 	{
 		switch (key)
 		{
@@ -62,7 +62,64 @@ void Scene::GetKeyboardInput(unsigned char key, int x, int y)
 			if (jogador.x < 39) jogador.Movimenta(1);
 		}
 	}
+	*/
+	
+	switch (estadosJogo.GetCurrentState())
+	{
+	case MAINMENU:
+		switch (key)
+		{
+		case 's':
+			if (estadosJogo.getAuxMenu() == 1)
+			{
+				estadosJogo.setAuxMenu(0);
+			}
+			else
+			{
+				estadosJogo.setAuxMenu(1);
+			}
+			break;
 
+		case 'w':
+			if (estadosJogo.getAuxMenu() == 1)
+			{
+				estadosJogo.setAuxMenu(0);
+			}
+			else
+			{
+				estadosJogo.setAuxMenu(1);
+			}
+			break;
+
+		case 13:
+			if (estadosJogo.getAuxMenu() == 1)
+			{
+				//estadosJogo.setJogo(true);
+				//estadosJogo.setMenuAtivo(false);
+
+				Start();
+
+				estadosJogo.SetCurrentState(PLAYING);
+			}
+			else
+			{
+				estadosJogo.setSairJogo(true);
+			}
+			break;
+		}
+		break;
+	case PLAYING:
+		switch (key)
+		{
+		case 'a':
+			if (jogador.x > -39) jogador.Movimenta(-1);
+			break;
+		case 'd':
+			if (jogador.x < 39) jogador.Movimenta(1);
+		}
+		break;
+	}
+	
 	glutPostRedisplay();
 }
 
@@ -152,7 +209,6 @@ void Scene::EscreveFuel(void)
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, teste[i]);
 }
 
-
 void Scene::SetWindowSize(GLsizei w, GLsizei h)
 {
 	// Para previnir uma divisão por zero
@@ -190,7 +246,25 @@ void Scene::Render()
 	// Limpa a janela e o depth buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 
-	if (estadosJogo.getJogo())
+	cout << "Estados atual: " << estadosJogo.GetCurrentState() << endl;
+
+	switch (estadosJogo.GetCurrentState())
+	{
+	case MAINMENU:
+		MainMenu();
+		break;
+	case PLAYING:
+		Playing();
+		break;	
+	}
+
+	/*
+	if (estadosJogo.getMenuAtivo() || estadosJogo.GetCurrentState() == MAINMENU)
+	{
+		MainMenu();
+	}
+
+	else if (estadosJogo.getJogo() estadosJogo.GetCurrentState() == PLAYING)
 	{
 		Pecas.criaMar();
 		Pecas.CriaParedes();
@@ -217,12 +291,7 @@ void Scene::Render()
 		EscreveFuel();
 
 		Playing();
-	}
-
-	else if (estadosJogo.getMenuAtivo())
-	{
-		MainMenu();
-	}
+	}*/
 
 	glutSwapBuffers();
 
@@ -231,6 +300,8 @@ void Scene::Render()
 
 void Scene::Start()
 {	
+	//estadosJogo.SetCurrentState(PLAYING);
+	
 	angle = 35;
 	cubeAngle = 0;
 	cubeX = 0;
@@ -286,6 +357,30 @@ void Scene::MainMenu()
 
 void Scene::Playing()
 {
+	Pecas.criaMar();
+	Pecas.CriaParedes();
+
+	for (int i = 0; i < 5; i++)
+	{
+		IA[i].DesenhaInimigo();
+	}
+
+	for (int i = 0; i < 10; i++)
+	{
+		bullets[i].DesenhaBullet();
+	}
+
+	for (int i = 0; i < 3; i++)
+	{
+		fuel[i].DesenhaFuel();
+	}
+
+	jogador.Desenhajogador();
+
+	EscreveVidas();
+	EscreveKills();
+	EscreveFuel();
+	
 	jogador.combustivel -= (100.0f / 30.0f) / 60.0f;
 
 	for (int i = 0; i < 5; i++)
@@ -372,6 +467,20 @@ void Scene::Pause()
 
 void Scene::GameOver()
 {
+	glColor3f(1.0, 1.0, 1.0);
+	estadosJogo.Texto(estadosJogo.novoJogo.data(), estadosJogo.novoJogo.size(), 352, 270);
+	estadosJogo.Texto(estadosJogo.sairJogo.data(), estadosJogo.sairJogo.size(), 350, 220);
+
+	if (estadosJogo.getAuxMenu() == 0)
+	{
+		estadosJogo.Titulo(estadosJogo.setaSelecao.data(), estadosJogo.setaSelecao.size(), 300, 220);
+	}
+	else
+	{
+		estadosJogo.Titulo(estadosJogo.setaSelecao.data(), estadosJogo.setaSelecao.size(), 300, 270);
+	}
+
+	estadosJogo.Titulo(estadosJogo._gameOver.data(), estadosJogo._gameOver.size(), 330, 420);
 }
 
 void Scene::Help()

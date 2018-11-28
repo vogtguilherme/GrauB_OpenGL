@@ -6,12 +6,19 @@
 
 using namespace std;
 
+enum States
+{
+	MAINMENU, PLAYING, HELP, PAUSE, GAMEOVER
+};
+
 class EstadosJogo
 {
 private:
 	
 	bool menuAtivo, over, jogo, saiu;
 	int aux;
+
+	States estadoAtual;
 
 public:
 	
@@ -24,6 +31,9 @@ public:
 	void Titulo(const char *text, int length, int x, int y);
 	void menu();
 	void gameOver();
+
+	States GetCurrentState();
+	void SetCurrentState(States value);
 
 	bool getMenuAtivo();
 	void setMenuAtivo(bool menu);

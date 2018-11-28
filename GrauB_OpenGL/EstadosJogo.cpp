@@ -2,9 +2,11 @@
 
 EstadosJogo::EstadosJogo()
 {
-	menuAtivo = true;
+	estadoAtual = PLAYING;
+	
+	/*menuAtivo = true;
 	over = false;
-	jogo = false;
+	jogo = false;*/
 
 	novoJogo = "New Game";
 	sairJogo = "Quit Game";
@@ -65,58 +67,68 @@ void EstadosJogo::Titulo(const char *text, int length, int x, int y)
 
 void EstadosJogo::menu()
 {
-	glColor3f(0.0, 0.0, 0.0);
-	glBegin(GL_QUADS);
-	glVertex2f(-5.0, -5.0); //Inferior Esquerdo
-	glVertex2f(-5.0, 5.0); //Superior Esquerdo
-	glVertex2f(5.0, 5.0);  //Superior Direito
-	glVertex2f(5.0, -5.0);  //Inferior Direito
-	glEnd();
+	//glColor3f(0.0, 0.0, 0.0);
+	//glBegin(GL_QUADS);
+	//glVertex2f(-5.0, -5.0); //Inferior Esquerdo
+	//glVertex2f(-5.0, 5.0); //Superior Esquerdo
+	//glVertex2f(5.0, 5.0);  //Superior Direito
+	//glVertex2f(5.0, -5.0);  //Inferior Direito
+	//glEnd();
 
-	glColor3f(1.0, 1.0, 1.0);
-	Texto(novoJogo.data(), novoJogo.size(), 352, 270);
-	Texto(sairJogo.data(), sairJogo.size(), 350, 220);
-	if (aux == 0)
-	{
-		Titulo(setaSelecao.data(), setaSelecao.size(), 300, 220);
-	}
+	//glColor3f(1.0, 1.0, 1.0);
+	//Texto(novoJogo.data(), novoJogo.size(), 352, 270);
+	//Texto(sairJogo.data(), sairJogo.size(), 350, 220);
+	//if (aux == 0)
+	//{
+	//	Titulo(setaSelecao.data(), setaSelecao.size(), 300, 220);
+	//}
 
-	else
-	{
-		Titulo(setaSelecao.data(), setaSelecao.size(), 300, 270);
-	}
-	Titulo(tituloJogo.data(), tituloJogo.size(), 320, 420);
+	//else
+	//{
+	//	Titulo(setaSelecao.data(), setaSelecao.size(), 300, 270);
+	//}
+	//Titulo(tituloJogo.data(), tituloJogo.size(), 320, 420);
 }
 
 void EstadosJogo::gameOver()
 {
-	glColor3f(0.0, 0.0, 0.0);
-	glBegin(GL_QUADS);
-	glVertex2f(-5.0, -5.0); //Inferior Esquerdo
-	glVertex2f(-5.0, 5.0); //Superior Esquerdo
-	glVertex2f(5.0, 5.0);  //Superior Direito
-	glVertex2f(5.0, -5.0);  //Inferior Direito
-	glEnd();
+	//glColor3f(0.0, 0.0, 0.0);
+	//glBegin(GL_QUADS);
+	//glVertex2f(-5.0, -5.0); //Inferior Esquerdo
+	//glVertex2f(-5.0, 5.0); //Superior Esquerdo
+	//glVertex2f(5.0, 5.0);  //Superior Direito
+	//glVertex2f(5.0, -5.0);  //Inferior Direito
+	//glEnd();
 
-	glColor3f(1.0, 1.0, 1.0);
-	Texto(novoJogo.data(), novoJogo.size(), 352, 270);
-	Texto(sairJogo.data(), sairJogo.size(), 350, 220);
-	
-	if (aux == 0)
-	{
-		Titulo(setaSelecao.data(), setaSelecao.size(), 300, 220);
-	}
-	else
-	{
-		Titulo(setaSelecao.data(), setaSelecao.size(), 300, 270);
-	}
+	//glColor3f(1.0, 1.0, 1.0);
+	//Texto(novoJogo.data(), novoJogo.size(), 352, 270);
+	//Texto(sairJogo.data(), sairJogo.size(), 350, 220);
+	//
+	//if (aux == 0)
+	//{
+	//	Titulo(setaSelecao.data(), setaSelecao.size(), 300, 220);
+	//}
+	//else
+	//{
+	//	Titulo(setaSelecao.data(), setaSelecao.size(), 300, 270);
+	//}
 
-	Titulo(_gameOver.data(), _gameOver.size(), 330, 420);
+	//Titulo(_gameOver.data(), _gameOver.size(), 330, 420);
 }
 
 void EstadosJogo::setMenuAtivo(bool menu)
 {
 	menuAtivo = menu;
+}
+
+States EstadosJogo::GetCurrentState()
+{
+	return States();
+}
+
+void EstadosJogo::SetCurrentState(States value)
+{
+	estadoAtual = value;
 }
 
 bool EstadosJogo::getMenuAtivo()
