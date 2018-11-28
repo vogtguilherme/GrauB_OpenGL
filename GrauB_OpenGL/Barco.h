@@ -1,6 +1,6 @@
 #pragma once
 #include <gl/freeglut.h>
-class Inimigo
+class Barco
 {
 public:
 
@@ -16,7 +16,7 @@ public:
 
 
 
-	Inimigo();
-	~Inimigo();
+	Barco();
+	~Barco();
 };
 

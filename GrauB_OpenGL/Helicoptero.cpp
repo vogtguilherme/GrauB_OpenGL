@@ -217,7 +217,7 @@ void helicoptero::DesenhaHelecoptero()
 	glEnd();
 	glPopMatrix();
 	//fim corpo
-
+	
 }
 
 void helicoptero::Movimento(float _x, float _z)

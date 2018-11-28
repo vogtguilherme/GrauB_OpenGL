@@ -16,6 +16,25 @@ void Objetos::criaMar()
 
 }
 
+void Objetos::CriaMontanhas()
+{
+
+	//cume
+	glPushMatrix();
+	glTranslatef(x, y, z);
+	glColor3f(0.75, 1.0, 0.0);
+	glScalef(20, 20, 20);
+	glBegin(GL_TRIANGLES);
+	glVertex3f(0.4f, 0.3f, 0.0);
+	glVertex3f(0.4f, 0.5f, 0.0);
+	glVertex3f(0.6f, 0.3f, 0.0);
+	glEnd();
+	glPopMatrix();
+	glPopMatrix();
+
+
+}
+
 void Objetos::CriaParedes()
 {
 	//parede lado direito

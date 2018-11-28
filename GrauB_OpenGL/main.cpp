@@ -7,7 +7,7 @@
 // Até que ponto a poligonagem da esfera é impactada pela iluminação? Explique com suas palavras.
 #include <gl/freeglut.h>
 #include  <iostream>
-#include "Inimigo.h"
+#include "Barco.h"
 #include "Objetos.h"
 #include "Jogador.h"
 #include "Bullet.h"
@@ -15,10 +15,10 @@
 #include"Helicoptero.h"
 
 GLfloat angle, fAspect;
-
 GLfloat cubeAngle, cubeX, cubeY, cubeZ, moveX, moveY, moveZ;
 
-Inimigo IA[5];
+
+Barco IA[5];
 helicoptero Coptero[5];
 Bullet Bullets[10];
 Objetos Pecas;
@@ -35,10 +35,6 @@ void EscreveVidas();
 void EscreveKills();
 void EscreveFuel();
 
-bool sndPlaySond(LPCTSTR lpszSound,
-	UINT fuSound);
-
-
 
 // Função callback chamada para fazer o desenho
 void Desenha(void)
@@ -46,20 +42,10 @@ void Desenha(void)
 	// Limpa a janela e o depth buffer
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	//glColor3f(0.0f, 0.0f, 1.0f);
 
-	// Desenha uma esfera sólida
-	//glutSolidSphere(50.0f, 100, 100);
-
+	//criando os objetos dentro do jogo
 	Pecas.criaMar();
 	Pecas.CriaParedes();
-
-	/*
-	glRotatef(cubeAngle, cubeX, cubeY, cubeZ);
-	glTranslatef(moveX, moveY, moveZ);
-	glutSolidCube(50);
-	*/
-
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -94,33 +80,21 @@ void Desenha(void)
 // Inicializa parâmetros de rendering
 void Inicializa(void)
 {
-	GLfloat luzAmbiente[4] = { 0.2,0.2,0.2,1.0 };
-	GLfloat luzDifusa[4] = { 0.7,0.7,0.7,1.0 };		 // "cor" 
+	GLfloat luzAmbiente[4] = { 0.5,0.5,0.5,1.0 };
+	GLfloat luzDifusa[4] = { 0.7,0.7,0.7 };		 // "cor" 
 	GLfloat luzEspecular[4] = { 1.0, 1.0, 1.0, 1.0 };// "brilho" 
-	GLfloat posicaoLuz[4] = { 0.0, 50.0, 50.0, 1.0 };
-
-	GLfloat mat_emission[] = { 1.0, 0.0, 0.0, 1.0 };   // emisão do material
-
-													   // Capacidade de brilho do material
-	GLfloat especularidade[4] = { 1.0,1.0,1.0,1.0 };
-	GLint especMaterial = 60;
 
 	// Especifica que a cor de fundo da janela será preta
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-
+	glClearColor(0.2f, 0.4f, 0.9f, 1.0f);
+	
 	// Habilita o modelo de colorização de Gouraud
 	glShadeModel(GL_SMOOTH);
-	//glShadeModel(GL_FLAT);
+	glShadeModel(GL_FLAT);
 
 
 	// Define emisão do material
 	//glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
 
-	// Define a refletância do material 
-	glMaterialfv(GL_FRONT, GL_SPECULAR, especularidade);
-
-	// Define a concentração do brilho
-	glMateriali(GL_FRONT, GL_SHININESS, especMaterial);
 
 	// Ativa o uso da luz ambiente 
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, luzAmbiente);
@@ -129,16 +103,6 @@ void Inicializa(void)
 	glLightfv(GL_LIGHT0, GL_AMBIENT, luzAmbiente);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusa);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, luzEspecular);
-	glLightfv(GL_LIGHT0, GL_POSITION, posicaoLuz);
-
-	// Habilita a definição da cor do material a partir da cor corrente
-	glEnable(GL_COLOR_MATERIAL);
-	//Habilita o uso de iluminação
-	glEnable(GL_LIGHTING);
-	// Habilita a luz de número 0
-	glEnable(GL_LIGHT0);
-	// Habilita o depth-buffering
-	glEnable(GL_DEPTH_TEST);
 
 	angle = 35;
 	cubeAngle = 0;
@@ -149,11 +113,15 @@ void Inicializa(void)
 	moveY = 0;
 	moveZ = 0;
 
+
+	//onde o player esta sendo inicializado e variaveis de vida,combustivel,acertos
 	Player.CriaPlayer(0, 5, 0);
 	Player.vidas = 3;
 	Player.acertos = 0;
 	Player.combustivel = 100;
 
+
+	//criando os objetos aleatoriamente dentro do mapa
 	for (int i = 0; i < 3; i++)
 	{
 		fuel[i].CriaFuel(rand() % 70 - 35, 5.0f, -1100 * (i + 1));
@@ -173,7 +141,7 @@ void Inicializa(void)
 		Coptero[i].speed = 1.0f;
 	}
 
-
+	//criando a bala 
 	for (int i = 0; i < 10; i++)
 	{
 		Bullets[i].CriaBullet(0, Player.y, 1000);
@@ -195,8 +163,6 @@ void EspecificaParametrosVisualizacao(void)
 
 	// Especifica sistema de coordenadas do modelo
 	glMatrixMode(GL_MODELVIEW);
-	// Inicializa sistema de coordenadas do modelo
-
 	// Especifica posição do observador e do alvo
 	gluLookAt(0, 40, 80, 0, 25, 0, 0, 10, 0);
 }
@@ -221,22 +187,15 @@ void GerenciaMouse(int button, int state, int x, int y)
 {
 	if (button == GLUT_LEFT_BUTTON)
 		if (state == GLUT_DOWN) 
-		{  
-			// Zoom-in
-			//if (angle >= 10) angle -= 5;
-
+		{ 
+			//clique do mouse e player atira
 			for (int i = 0; i < 10; i++)
 			{
 				if (Bullets[i].usada == false)
 				{
 					Bullets[i].CriaBullet(Player.x, Player.y, Player.z - 10);
 					Bullets[i].usada = true;
-
-
-					
-
 					std::cout << "Taca Fogo";
-
 					break;
 				}
 			}
@@ -245,8 +204,7 @@ void GerenciaMouse(int button, int state, int x, int y)
 	if (button == GLUT_RIGHT_BUTTON)
 		if (state == GLUT_DOWN) 
 		{  
-			// Zoom-out
-			//if (angle <= 130) angle += 5;
+			
 		}
 	if (button == GLUT_KEY_LEFT)
 	{
@@ -256,12 +214,11 @@ void GerenciaMouse(int button, int state, int x, int y)
 		}
 	}
 	
-	//EspecificaParametrosVisualizacao();
-	//glutPostRedisplay();
 }
 
 void EscreveVidas(void)
 {
+
 	char texto[8] = "LIFES:";
 	char teste[20];
 	int i = 0;
@@ -271,8 +228,6 @@ void EscreveVidas(void)
 
 	//Cor da fonte
 	glColor3ub(255, 255, 255);
-	//glColor3f(1,1,1);
-	//Posição da palavra
 	glRasterPos3f(30.0f, 35.0f, -0.0f);
 
 	//Uso do "for" para escrever mais de um caracter
@@ -294,7 +249,7 @@ void EscreveKills(void)
 
 	//Cor da fonte
 	glColor3ub(255, 255, 255);
-	//glColor3f(1,1,1);
+	
 	//Posição da palavra
 	glRasterPos3f(30.0f, 33.5f, -0.0f);
 
@@ -317,7 +272,7 @@ void EscreveFuel(void)
 
 	//Cor da fonte
 	glColor3ub(255, 255, 255);
-	//glColor3f(1,1,1);
+	
 	//Posição da palavra
 	glRasterPos3f(30.0f, 32.0f, -0.0f);
 
@@ -331,6 +286,7 @@ void EscreveFuel(void)
 
 void GerenciaTeclas(unsigned char key, int x, int y)
 {
+	//movimentação do player
 	switch (key)
 	{
 	case 'a':
@@ -340,8 +296,6 @@ void GerenciaTeclas(unsigned char key, int x, int y)
 		if (Player.x < 39) Player.Movimenta(1);
 		break;
 	}
-	//std::cout << Player.x;
-
 	glutPostRedisplay();
 }
 
@@ -355,11 +309,8 @@ int main(int argc, char **argv)
 	glutCreateWindow("Iluminação");
 
 	glutDisplayFunc(Desenha);
-
 	glutReshapeFunc(AlteraTamanhoJanela);
-
 	glutMouseFunc(GerenciaMouse);
-
 	glutKeyboardFunc(GerenciaTeclas);
 
 	Inicializa();
@@ -370,13 +321,16 @@ int main(int argc, char **argv)
 	glutMainLoop();
 }
 
+
+//com se fosse um update onde vai verificar todo momento 
 void runMainLoop(int val)
 {
 	Desenha();
 
+	//decrementando o combustivel
 	Player.combustivel -= (100.0f / 30.0f) / 60.0f;
 
-
+	//coptero
 	for (int i = 0; i < 5; i++)
 	{
 		if (Coptero[i].z < 100)Coptero[i].Movimento(0, Coptero[i].speed*speed);
@@ -386,7 +340,7 @@ void runMainLoop(int val)
 			if (Coptero[i].speed < 20)Coptero[i].speed += Coptero[i].speed*0.2f;
 		}
 
-
+		//sistema de colisao do player com o objeto
 		if (Player.x - 1.5f < Coptero[i].x + 10 && Player.x + 1.5f > Coptero[i].x - 10)
 		{
 			if (Player.y - 1.5f < Coptero[i].y + 10 && Player.y + 1.5f > Coptero[i].y - 10)
@@ -403,7 +357,7 @@ void runMainLoop(int val)
 		}
 	}
 
-
+	//barquinho
 	for (int i = 0; i < 5; i++)
 	{
 		if (IA[i].z < 100) IA[i].Movimento(0, IA[i].speed * speed);
@@ -412,15 +366,13 @@ void runMainLoop(int val)
 			IA[i].CriaInimigo(rand() % 80 - 40, IA[i].y, -4000);
 			if (IA[i].speed < 20) IA[i].speed += IA[i].speed * 0.1f;
 		}
-
+//colisao do player com o objeto barquinho
 		if (Player.x - 1.5f < IA[i].x + 10 && Player.x + 1.5f > IA[i].x - 10)
 		{
 			if (Player.y - 1.5f < IA[i].y + 10 && Player.y + 1.5f > IA[i].y - 10)
 			{
 				if (Player.z - 1.5f < IA[i].z + 10 && Player.z + 1.5f > IA[i].z - 10)
 				{
-					//std::cout << "BAteu Carai z";
-
 					IA[i].CriaInimigo(50000, IA[i].y, IA[i].z);
 
 					Player.vidas--;
@@ -428,13 +380,14 @@ void runMainLoop(int val)
 			}
 		}
 	}
-
+	//gasolina
 	for (int i = 0; i < 3; i++)
 	{
 		fuel[i].Movimenta(0, fuel[i].speed);
 
 		if(fuel[i].z > 100) fuel[i].CriaFuel(rand() % 70 - 35, fuel[i].y, -4000);
 
+		//colisao do player com o combustivel
 		if (Player.x - 1.5f < fuel[i].x + 10 && Player.x + 1.5f > fuel[i].x - 10)
 		{
 			if (Player.y - 1.5f < fuel[i].y + 10 && Player.y + 1.5f > fuel[i].y - 10)
@@ -450,6 +403,7 @@ void runMainLoop(int val)
 		}
 	}
 
+	//bala
 	for (int j = 0; j < 10; j++)
 	{
 		if (Bullets[j].usada == true)
@@ -506,40 +460,7 @@ void runMainLoop(int val)
 	}
 
 
-	/*
-	if (lado == true)
-	{
-		if (moveX < 0)
-		{
-			//IA.Movimento(moveX - speed, 0.0f, 0.0f);
-			Pecas.Mmovimenta(moveX - speed);
-		}
-		if (moveX >= 10)
-		{
-			lado = false;
-		}
-		moveX++;
-		std::cout << "valor em x: " << moveX << std::endl;
-
-		}
-	if (lado == false) {
-		if (moveX < 50)
-		{
-			// IA.Movimento(moveX - speed, 0.0, 0.0);
-			Pecas.Mmovimenta(moveX - speed);
-		}
-
-		if (moveX <= -10)
-		{
-			lado = true;
-		}
-		moveX--;
-		std::cout << "valor em x: " << moveX << std::endl;
-
-	}*/
-
-
-
+	
 	//Frame logic
 	//Update();
 
