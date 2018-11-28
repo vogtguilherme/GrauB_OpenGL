@@ -1,13 +1,13 @@
 #include "Helicoptero.h"
 
-void helicoptero::CriaHelecoptero(float _x, float _y, float _z)
+void Helicoptero::CriaHelecoptero(float _x, float _y, float _z)
 {
 	x = _x;
 	y = _y;
 	z = _z;
 }
 
-void helicoptero::DesenhaHelecoptero()
+void Helicoptero::DesenhaHelecoptero()
 {
 	//helice 3d
 	glPushMatrix();
@@ -220,7 +220,7 @@ void helicoptero::DesenhaHelecoptero()
 	
 }
 
-void helicoptero::Movimento(float _x, float _z)
+void Helicoptero::Movimento(float _x, float _z)
 {
 	x += _x;
 	z += _z;
@@ -436,11 +436,11 @@ void helicoptero::Movimento(float _x, float _z)
 	//fim corpo
 }
 
-helicoptero::helicoptero()
+Helicoptero::Helicoptero()
 {
 }
 
 
-helicoptero::~helicoptero()
+Helicoptero::~Helicoptero()
 {
 }

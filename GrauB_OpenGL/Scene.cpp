@@ -334,10 +334,16 @@ void Scene::Render()
 	{
 		Pecas.criaMar();
 		Pecas.CriaParedes();
+		Pecas.CriaMontanhas();
 
 		for (int i = 0; i < 5; i++)
 		{
-			IA[i].DesenhaInimigo();
+			barcos[i].DesenhaInimigo();
+		}
+
+		for (int i = 0; i < 5; i++)
+		{
+			helicoptero[i].DesenhaHelecoptero();
 		}
 
 		for (int i = 0; i < 10; i++)
@@ -397,8 +403,14 @@ void Scene::Start()
 
 	for (int i = 0; i < 5; i++)
 	{
-		IA[i].CriaInimigo(rand() % 80 - 40, 5.0f, -1000 * (i + 1));
-		IA[i].speed = 1.0f;
+		barcos[i].CriaInimigo(rand() % 80 - 40, 5.0f, -1000 * (i + 1));
+		barcos[i].speed = 1.0f;
+	}
+
+	for (int i = 0; i < 5; i++)
+	{
+		helicoptero[i].CriaHelecoptero(rand() % 70 - 35, 5.0f, -1100 * (i + 1));
+		helicoptero[i].speed = 1.0f;
 	}
 
 	for (int i = 0; i < 10; i++)
@@ -440,20 +452,20 @@ void Scene::Playing()
 
 	for (int i = 0; i < 5; i++)
 	{
-		if (IA[i].z < 100) IA[i].Movimento(0, IA[i].speed * speed);
+		if (barcos[i].z < 100) barcos[i].Movimento(0, barcos[i].speed * speed);
 		else
 		{
-			IA[i].CriaInimigo(rand() % 80 - 40, IA[i].y, -4000);
-			if (IA[i].speed < 20) IA[i].speed += IA[i].speed * 0.1f;
+			barcos[i].CriaInimigo(rand() % 80 - 40, barcos[i].y, -4000);
+			if (barcos[i].speed < 20) barcos[i].speed += barcos[i].speed * 0.1f;
 		}
 
-		if (jogador.x - 1.5f < IA[i].x + 10 && jogador.x + 1.5f > IA[i].x - 10)
+		if (jogador.x - 1.5f < barcos[i].x + 10 && jogador.x + 1.5f > barcos[i].x - 10)
 		{
-			if (jogador.y - 1.5f < IA[i].y + 10 && jogador.y + 1.5f > IA[i].y - 10)
+			if (jogador.y - 1.5f < barcos[i].y + 10 && jogador.y + 1.5f > barcos[i].y - 10)
 			{
-				if (jogador.z - 1.5f < IA[i].z + 10 && jogador.z + 1.5f > IA[i].z - 10)
+				if (jogador.z - 1.5f < barcos[i].z + 10 && jogador.z + 1.5f > barcos[i].z - 10)
 				{
-					IA[i].CriaInimigo(50000, IA[i].y, IA[i].z);
+					barcos[i].CriaInimigo(50000, barcos[i].y, barcos[i].z);
 
 					jogador.vidas--;
 				}
@@ -496,13 +508,13 @@ void Scene::Playing()
 
 			for (int i = 0; i < 5; i++)
 			{
-				if (bullets[j].x - 0.5f < IA[i].x + 10 && bullets[j].x + 0.5f > IA[i].x - 10)
+				if (bullets[j].x - 0.5f < barcos[i].x + 10 && bullets[j].x + 0.5f > barcos[i].x - 10)
 				{
-					if (bullets[j].y - 0.5f < IA[i].y + 10 && bullets[j].y + 0.5f > IA[i].y - 10)
+					if (bullets[j].y - 0.5f < barcos[i].y + 10 && bullets[j].y + 0.5f > barcos[i].y - 10)
 					{
-						if (bullets[j].z - 0.5f < IA[i].z + 10 && bullets[j].z + 0.5f > IA[i].z - 10)
+						if (bullets[j].z - 0.5f < barcos[i].z + 10 && bullets[j].z + 0.5f > barcos[i].z - 10)
 						{
-							IA[i].CriaInimigo(50000, IA[i].y, IA[i].z);
+							barcos[i].CriaInimigo(50000, barcos[i].y, barcos[i].z);
 
 							bullets[j].CriaBullet(0, jogador.y, 1000);
 							bullets[j].usada = false;

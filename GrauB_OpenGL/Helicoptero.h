@@ -2,7 +2,7 @@
 
 #include <gl/freeglut.h>
 
-class helicoptero
+class Helicoptero
 {
 public:
 	float x, y, z;
@@ -14,7 +14,7 @@ public:
 	void Movimento(float _x, float _z);
 
 
-	helicoptero();
-	~helicoptero();
+	Helicoptero();
+	~Helicoptero();
 };
 
