@@ -47,7 +47,7 @@ public:
 	Bullet bullets[10];
 	Jogador jogador;
 	Barco barcos[5];
-	Helicoptero helicoptero[2];
+	Helicoptero helicoptero[5];
 	Fuel fuel[3];
 	Objetos Pecas;
 	
