@@ -2,12 +2,6 @@
 
 void Scene::Update()
 {
-	//Controle das variáveis de estado e fluxo do jogo
-	if (estadosJogo.getJogo())
-	{
-
-	}
-
 	//Condicional para quando o usuario deseja sair do jogo
 	if (estadosJogo.getSairJogo())
 	{
@@ -69,12 +63,18 @@ void Scene::GetKeyboardInput(unsigned char key, int x, int y)
 		{
 		case 'a':
 		case 'A':
-			if (jogador.x > -39) jogador.Movimenta(-1);
+			jogador.toRight = false;
+			jogador.toLeft = true;
 			break;
 		case 'd':
 		case 'D':
-			if (jogador.x < 39) jogador.Movimenta(1);
+			jogador.toLeft = false;
+			jogador.toRight = true;
 			break;
+		}
+
+		switch (key)
+		{
 		case 27:
 			estadosJogo.setJogo(false);
 			estadosJogo.setPause(true);
@@ -171,6 +171,11 @@ void Scene::GetKeyboardInput(unsigned char key, int x, int y)
 			break;
 		}
 	}
+
+}
+
+void Scene::GetKeyboardInputUP(unsigned char key, int x, int y)
+{
 
 }
 

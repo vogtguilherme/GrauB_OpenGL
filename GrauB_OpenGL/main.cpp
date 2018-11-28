@@ -26,6 +26,11 @@ void GerenciaTeclas(unsigned char key, int x, int y)
 	game.GetKeyboardInput(key, x, y);
 }
 
+void GerenciaTeclasUP(unsigned char key, int x, int y)
+{
+	game.GetKeyboardInputUP(key, x, y);
+}
+
 void GerenciaTeclasEspeciais(int key, int x, int y)
 {
 	game.GetSpecialKeyboardInput(key, x, y);
@@ -51,6 +56,7 @@ int main(int argc, char **argv)
 	glutReshapeFunc(AlteraTamanhoJanela);
 	glutMouseFunc(GerenciaMouse);
 	glutKeyboardFunc(GerenciaTeclas);
+	glutKeyboardUpFunc(GerenciaTeclasUP);
 	glutSpecialFunc(GerenciaTeclasEspeciais);
 
 	Inicializa();
