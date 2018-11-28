@@ -35,6 +35,9 @@ void EscreveFuel();
 
 bool sndPlaySond(LPCTSTR lpszSound,
 	UINT fuSound);
+
+
+
 // Função callback chamada para fazer o desenho
 void Desenha(void)
 {
@@ -234,7 +237,7 @@ void GerenciaMouse(int button, int state, int x, int y)
 	{
 		if (state == GLUT_DOWN)
 		{
-			//IA.Movimento(+0.5f, 0.0f, 0.0f);
+			
 		}
 	}
 	
