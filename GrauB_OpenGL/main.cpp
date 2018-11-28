@@ -46,7 +46,7 @@ void Desenha(void)
 	//criando os objetos dentro do jogo
 	Pecas.criaMar();
 	Pecas.CriaParedes();
-
+	Pecas.CriaMontanhas();
 	for (int i = 0; i < 5; i++)
 	{
 		Coptero[i].DesenhaHelecoptero();

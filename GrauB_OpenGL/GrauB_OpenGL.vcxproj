@@ -111,10 +111,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="EstadosJogo.cpp" />
     <ClCompile Include="Fuel.cpp" />
     <ClCompile Include="Helicoptero.cpp" />
-    <ClCompile Include="Inimigo.cpp" />
+    <ClCompile Include="Barco.cpp" />
     <ClCompile Include="Jogador.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Objetos.cpp" />
@@ -125,10 +124,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
-    <ClInclude Include="EstadosJogo.h" />
     <ClInclude Include="Fuel.h" />
     <ClInclude Include="Helicoptero.h" />
-    <ClInclude Include="Inimigo.h" />
+    <ClInclude Include="Barco.h" />
     <ClInclude Include="Jogador.h" />
     <ClInclude Include="Objetos.h" />
     <ClInclude Include="Scene.h" />

@@ -18,18 +18,96 @@ void Objetos::criaMar()
 
 void Objetos::CriaMontanhas()
 {
-
-	//cume
+	//montanha1
 	glPushMatrix();
-	glTranslatef(x, y, z);
-	glColor3f(0.75, 1.0, 0.0);
-	glScalef(20, 20, 20);
-	glBegin(GL_TRIANGLES);
-	glVertex3f(0.4f, 0.3f, 0.0);
-	glVertex3f(0.4f, 0.5f, 0.0);
-	glVertex3f(0.6f, 0.3f, 0.0);
+	glTranslatef(30.0f, 0.0f, 0.0f);
+	glRotatef(-90, 0.5, 0.0, 0.0);
+	glScalef(30, 30, 30);
+	glBegin(GL_POLYGON);
+	glColor3f(1.0, 1.0, 1.0);				glVertex3f(0.3f, 0.3f, 1.0f); //cores e verteces
+	glColor3f(0.1, 0.13, 0.7);				glVertex3f(0.2f, 0.4f, 0.5f); //cores e verteces
+	glColor3f(0.1, 0.13, 0.7);				glVertex3f(0.4f, 0.4f, 0.5f); //cores e verteces
+	glColor3f(0.1, 0.13, 0.7);				glVertex3f(0.4f, 0.2f, 0.5f); //cores e verteces
+	glColor3f(0.1, 0.13, 0.7);				glVertex3f(0.2f, 0.2f, 0.5f); //cores e verteces
+	glColor3f(0.1, 0.13, 0.7);				glVertex3f(0.2f, 0.4f, 0.5f); //cores e verteces
 	glEnd();
 	glPopMatrix();
+
+	//montanha2
+	glPushMatrix();
+	glTranslatef(30.0f, -10.0f, 0.0f);
+	glRotatef(-90, 0.5, 0.0, 0.0);
+	glScalef(30, 30, 30);
+	glBegin(GL_POLYGON);
+	glColor3f(0.1, 0.13, 0.7);				glVertex3f(0.3f, 0.3f, 1.0f); //cores e verteces
+	glColor3f(0.1, 0.13, 0.7);				glVertex3f(0.2f, 0.4f, 0.5f); //cores e verteces
+	glColor3f(0.1, 0.13, 0.7);				glVertex3f(0.4f, 0.4f, 0.5f); //cores e verteces
+	glColor3f(0.1, 0.13, 0.7);				glVertex3f(0.4f, 0.2f, 0.5f); //cores e verteces
+	glColor3f(0.1, 0.13, 0.7);				glVertex3f(0.2f, 0.2f, 0.5f); //cores e verteces
+	glColor3f(0.1, 0.13, 0.7);				glVertex3f(0.2f, 0.4f, 0.5f); //cores e verteces
+	glEnd();
+	glPopMatrix();
+
+
+	//montanha3
+	glPushMatrix();
+	glTranslatef(20.0f, 20.0f, 0.0f);
+	glRotatef(-90, 0.5, 0.0, 0.0);
+	glScalef(30, 30, 30);
+	glBegin(GL_POLYGON);
+	glColor3f(0.1, 0.13, 0.7);				glVertex3f(0.3f, 0.3f, 1.0f); //cores e verteces
+	glColor3f(1.1, 0.13, 0.7);				glVertex3f(0.2f, 0.4f, 0.5f); //cores e verteces
+	glColor3f(1.1, 0.13, 0.7);				glVertex3f(0.4f, 0.4f, 0.5f); //cores e verteces
+	glColor3f(1.1, 0.13, 0.7);				glVertex3f(0.4f, 0.2f, 0.5f); //cores e verteces
+	glColor3f(1.1, 0.13, 0.7);				glVertex3f(0.2f, 0.2f, 0.5f); //cores e verteces
+	glColor3f(1.1, 0.13, 0.7);				glVertex3f(0.2f, 0.4f, 0.5f); //cores e verteces
+	glEnd();
+	glPopMatrix();
+
+	//montanha4
+	glPushMatrix();
+	glTranslatef(-40.0f, 0.0f, 0.0f);
+	glRotatef(-90, 0.5, 0.0, 0.0);
+	glScalef(30, 30, 30);
+	glBegin(GL_POLYGON);
+	glColor3f(1.0, 1.0, 1.0);				glVertex3f(0.3f, 0.3f, 1.0f); //cores e verteces
+	glColor3f(0.1, 0.13, 0.7);				glVertex3f(0.2f, 0.4f, 0.5f); //cores e verteces
+	glColor3f(0.1, 0.13, 0.7);				glVertex3f(0.4f, 0.4f, 0.5f); //cores e verteces
+	glColor3f(0.1, 0.13, 0.7);				glVertex3f(0.4f, 0.2f, 0.5f); //cores e verteces
+	glColor3f(0.1, 0.13, 0.7);				glVertex3f(0.2f, 0.2f, 0.5f); //cores e verteces
+	glColor3f(0.1, 0.13, 0.7);				glVertex3f(0.2f, 0.4f, 0.5f); //cores e verteces
+	glEnd();
+	glPopMatrix();
+
+	//montanha5
+	glPushMatrix();
+	glTranslatef(-50.0f, -10.0f, 0.0f);
+	glRotatef(-90, 0.5, 0.0, 0.0);
+	glScalef(30, 30, 30);
+	glBegin(GL_POLYGON);
+	glColor3f(0.1, 0.13, 0.7);				glVertex3f(0.3f, 0.3f, 1.0f); //cores e verteces
+	glColor3f(0.1, 0.13, 0.7);				glVertex3f(0.2f, 0.4f, 0.5f); //cores e verteces
+	glColor3f(0.1, 0.13, 0.7);				glVertex3f(0.4f, 0.4f, 0.5f); //cores e verteces
+	glColor3f(0.1, 0.13, 0.7);				glVertex3f(0.4f, 0.2f, 0.5f); //cores e verteces
+	glColor3f(0.1, 0.13, 0.7);				glVertex3f(0.2f, 0.2f, 0.5f); //cores e verteces
+	glColor3f(0.1, 0.13, 0.7);				glVertex3f(0.2f, 0.4f, 0.5f); //cores e verteces
+	glEnd();
+	glPopMatrix();
+
+
+	//montanha6
+	glPushMatrix();
+	glTranslatef(-20.0f, 20.0f, 0.0f);
+	glRotatef(-90, 0.5, 0.0, 0.0);
+	glScalef(30, 30, 30);
+	glBegin(GL_POLYGON);
+	glColor3f(0.1, 0.13, 0.7);				glVertex3f(0.3f, 0.3f, 1.0f); //cores e verteces
+	glColor3f(1.1, 0.13, 0.7);				glVertex3f(0.2f, 0.4f, 0.5f); //cores e verteces
+	glColor3f(1.1, 0.13, 0.7);				glVertex3f(0.4f, 0.4f, 0.5f); //cores e verteces
+	glColor3f(1.1, 0.13, 0.7);				glVertex3f(0.4f, 0.2f, 0.5f); //cores e verteces
+	glColor3f(1.1, 0.13, 0.7);				glVertex3f(0.2f, 0.2f, 0.5f); //cores e verteces
+	glColor3f(1.1, 0.13, 0.7);				glVertex3f(0.2f, 0.4f, 0.5f); //cores e verteces
+	glEnd();
 	glPopMatrix();
 
 
