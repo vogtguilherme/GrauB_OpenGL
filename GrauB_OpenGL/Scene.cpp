@@ -35,7 +35,7 @@ void Scene::GetKeyboardInputUP(unsigned char key, int x, int y)
 
 void Scene::GetKeyboardInput(unsigned char key, int x, int y)
 {
-	if (estadosJogo.getMenuAtivo() || estadosJogo.getOverAtivo())
+	if (estadosJogo.getMenuAtivo())
 	{
 		switch (key)
 		{
@@ -198,7 +198,7 @@ void Scene::GetKeyboardInput(unsigned char key, int x, int y)
 
 void Scene::GetSpecialKeyboardInput(unsigned char key, int x, int y)
 {
-	if (estadosJogo.getMenuAtivo() || estadosJogo.getOverAtivo())
+	if (estadosJogo.getMenuAtivo())
 	{
 		switch (key)
 		{
