@@ -26,6 +26,7 @@ public:
 	void Start();
 	void Update();
 	void GetKeyboardInput(unsigned char key, int x, int y);
+	void GetKeyboardInputUP(unsigned char key, int x, int y);
 	void GetSpecialKeyboardInput(unsigned char key, int x, int y);
 	void GetMouseInput(int button, int state, int x, int y);
 	void SetWindowSize(GLsizei w, GLsizei h);
