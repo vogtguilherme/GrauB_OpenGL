@@ -6,6 +6,11 @@ void Scene::Update()
 	{
 		exit(0);
 	}
+
+	if (estadosJogo.getJogo())
+	{
+		
+	}
 }
 
 void Scene::GetKeyboardInput(unsigned char key, int x, int y)
@@ -38,11 +43,12 @@ void Scene::GetKeyboardInput(unsigned char key, int x, int y)
 
 		case 13:
 			if (estadosJogo.getAuxMenu() == 1)
-			{
+			{				
 				estadosJogo.setJogo(true);
-				estadosJogo.setMenuAtivo(false);
-				
-				Start();				
+
+				SpecifyViewParameters();
+
+				estadosJogo.setMenuAtivo(false);				
 			}
 			else
 			{
@@ -68,19 +74,24 @@ void Scene::GetKeyboardInput(unsigned char key, int x, int y)
 
 void Scene::GetMouseInput(int button, int state, int x, int y)
 {
-	if (button == GLUT_LEFT_BUTTON)
-		if (state == GLUT_DOWN)
+	if (estadosJogo.getJogo())
+	{
+		if (button == GLUT_LEFT_BUTTON)
 		{
-			for (int i = 0; i < 10; i++)
+			if (state == GLUT_DOWN)
 			{
-				if (bullets[i].usada == false)
+				for (int i = 0; i < 10; i++)
 				{
-					bullets[i].CriaBullet(jogador.x, jogador.y, jogador.z - 10);
-					bullets[i].usada = true;
-					break;
+					if (bullets[i].usada == false)
+					{
+						bullets[i].CriaBullet(jogador.x, jogador.y, jogador.z - 10);
+						bullets[i].usada = true;
+						break;
+					}
 				}
 			}
 		}
+	}
 }
 
 void Scene::EscreveVidas(void)
@@ -152,7 +163,6 @@ void Scene::EscreveFuel(void)
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, teste[i]);
 }
 
-
 void Scene::SetWindowSize(GLsizei w, GLsizei h)
 {
 	// Para previnir uma divisão por zero
@@ -215,10 +225,9 @@ void Scene::Render()
 		EscreveVidas();
 		EscreveKills();
 		EscreveFuel();
-
+		
 		Playing();
 	}
-
 	else if (estadosJogo.getMenuAtivo())
 	{
 		MainMenu();
@@ -226,11 +235,12 @@ void Scene::Render()
 
 	glutSwapBuffers();
 
+	//Comentei isso aqui e ficou na velocidade normal
 	glutPostRedisplay();
 }
 
 void Scene::Start()
-{	
+{		
 	angle = 35;
 	cubeAngle = 0;
 	cubeX = 0;
@@ -285,7 +295,7 @@ void Scene::MainMenu()
 }
 
 void Scene::Playing()
-{
+{		
 	jogador.combustivel -= (100.0f / 30.0f) / 60.0f;
 
 	for (int i = 0; i < 5; i++)

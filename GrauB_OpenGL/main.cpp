@@ -26,7 +26,7 @@ void GerenciaTeclas(unsigned char key, int x, int y)
 
 void Inicializa(void)
 {
-	//game.Start();
+	game.Start();
 }
 
 int main(int argc, char **argv)
