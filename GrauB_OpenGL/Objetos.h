@@ -5,9 +5,12 @@ class Objetos
 {
 public:
 
-	float x;
+	float x,y,z;
 
 	void criaMar();
+
+	void CriaMontanhas();
+
 
 	void CriaParedes();
 

@@ -1,13 +1,13 @@
-#include "Inimigo.h"
+#include "Barco.h"
 
-void Inimigo::CriaInimigo(float _x, float _y, float _z)
+void Barco::CriaInimigo(float _x, float _y, float _z)
 {
 	x = _x;
 	y = _y;
 	z = _z;
 }
 
-void Inimigo::DesenhaInimigo()
+void Barco::DesenhaInimigo()
 {
 
 	glPushMatrix();
@@ -149,7 +149,7 @@ void Inimigo::DesenhaInimigo()
 	
 }
 
-void Inimigo::Movimento(float _x, float _z)
+void Barco::Movimento(float _x, float _z)
 {
 
 	x += _x;
@@ -292,11 +292,11 @@ void Inimigo::Movimento(float _x, float _z)
 	glPopMatrix();
 }
 
-Inimigo::Inimigo()
+Barco::Barco()
 {
 }
 
 
-Inimigo::~Inimigo()
+Barco::~Barco()
 {
 }
