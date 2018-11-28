@@ -12,12 +12,14 @@
 #include "Jogador.h"
 #include "Bullet.h"
 #include "Fuel.h"
+#include"Helicoptero.h"
 
 GLfloat angle, fAspect;
 
 GLfloat cubeAngle, cubeX, cubeY, cubeZ, moveX, moveY, moveZ;
 
 Inimigo IA[5];
+helicoptero Coptero[5];
 Bullet Bullets[10];
 Objetos Pecas;
 Jogador Player;
@@ -57,6 +59,12 @@ void Desenha(void)
 	glTranslatef(moveX, moveY, moveZ);
 	glutSolidCube(50);
 	*/
+
+
+	for (int i = 0; i < 5; i++)
+	{
+		Coptero[i].DesenhaHelecoptero();
+	}
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -158,6 +166,13 @@ void Inicializa(void)
 		IA[i].CriaInimigo(rand() % 80 - 40, 5.0f, -1000 * (i + 1));
 		IA[i].speed = 1.0f;
 	}
+
+	for (int i = 0; i < 5; i++)
+	{
+		Coptero[i].CriaHelecoptero(rand() % 70 - 35, 5.0f, -1100 * (i + 1));
+		Coptero[i].speed = 1.0f;
+	}
+
 
 	for (int i = 0; i < 10; i++)
 	{
@@ -361,6 +376,34 @@ void runMainLoop(int val)
 
 	Player.combustivel -= (100.0f / 30.0f) / 60.0f;
 
+
+	for (int i = 0; i < 5; i++)
+	{
+		if (Coptero[i].z < 100)Coptero[i].Movimento(0, Coptero[i].speed*speed);
+		else
+		{
+			Coptero[i].CriaHelecoptero(rand() % 80 - 60, Coptero[i].y , -3000);
+			if (Coptero[i].speed < 20)Coptero[i].speed += Coptero[i].speed*0.2f;
+		}
+
+
+		if (Player.x - 1.5f < Coptero[i].x + 10 && Player.x + 1.5f > Coptero[i].x - 10)
+		{
+			if (Player.y - 1.5f < Coptero[i].y + 10 && Player.y + 1.5f > Coptero[i].y - 10)
+			{
+				if (Player.z - 1.5f < Coptero[i].z + 10 && Player.z + 1.5f > Coptero[i].z - 10)
+				{
+					std::cout << "BAteu Carai z";
+
+					Coptero[i].CriaHelecoptero(40000, Coptero[i].y, Coptero[i].z);
+
+					Player.vidas--;
+				}
+			}
+		}
+	}
+
+
 	for (int i = 0; i < 5; i++)
 	{
 		if (IA[i].z < 100) IA[i].Movimento(0, IA[i].speed * speed);
@@ -419,6 +462,7 @@ void runMainLoop(int val)
 				Bullets[j].usada = false;
 			}
 
+			//colisor da bala com o barco
 			for (int i = 0; i < 5; i++)
 			{
 				if (Bullets[j].x - 0.5f < IA[i].x + 10 && Bullets[j].x + 0.5f > IA[i].x - 10)
@@ -437,6 +481,27 @@ void runMainLoop(int val)
 					}
 				}
 			}
+
+			//colisor da bala no coptero
+			for (int i = 0; i < 5; i++)
+			{
+				if (Bullets[j].x - 0.5f < Coptero[i].x + 10 && Bullets[j].x + 0.5f > Coptero[i].x - 10)
+				{
+					if (Bullets[j].y - 0.5f < Coptero[i].y + 10 && Bullets[j].y + 0.5f > Coptero[i].y - 10)
+					{
+						if (Bullets[j].z - 0.5f < Coptero[i].z + 10 && Bullets[j].z + 0.5f > Coptero[i].z - 10)
+						{
+							Coptero[i].CriaHelecoptero(50000, Coptero[i].y, Coptero[i].z);
+
+							Bullets[j].CriaBullet(0, Player.y, 1000);
+							Bullets[j].usada = false;
+
+							Player.acertos++;
+						}
+					}
+				}
+			}
+
 		}
 	}
 
