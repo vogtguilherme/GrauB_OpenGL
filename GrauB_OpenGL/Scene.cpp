@@ -62,12 +62,10 @@ void Scene::GetKeyboardInput(unsigned char key, int x, int y)
 		switch (key)
 		{
 		case 'a':
-		case 'A':
 			jogador.toRight = false;
 			jogador.toLeft = true;
 			break;
 		case 'd':
-		case 'D':
 			jogador.toLeft = false;
 			jogador.toRight = true;
 			break;
@@ -176,7 +174,20 @@ void Scene::GetKeyboardInput(unsigned char key, int x, int y)
 
 void Scene::GetKeyboardInputUP(unsigned char key, int x, int y)
 {
-
+	if (estadosJogo.getJogo())
+	{
+		switch (key)
+		{
+		case 'a':
+			jogador.toRight = false;
+			jogador.toLeft = false;
+			break;
+		case 'd':
+			jogador.toLeft = false;
+			jogador.toRight = false;
+			break;
+		}
+	}
 }
 
 void Scene::GetSpecialKeyboardInput(unsigned char key, int x, int y)
