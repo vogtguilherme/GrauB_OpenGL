@@ -54,7 +54,7 @@ int main(int argc, char **argv)
 	glutSpecialFunc(GerenciaTeclasEspeciais);
 
 	Inicializa();
-		
+
 	glutTimerFunc(1000 / game.FPS, runMainLoop, 0);
 
 	glutMainLoop();

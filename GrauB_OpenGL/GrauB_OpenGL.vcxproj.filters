@@ -24,9 +24,6 @@
     <ClCompile Include="Fuel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Inimigo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Jogador.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -36,7 +33,10 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet.cpp">
+    <ClCompile Include="Helicoptero.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Barco.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EstadosJogo.cpp">
@@ -53,9 +53,6 @@
     <ClInclude Include="Fuel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Inimigo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Jogador.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -65,7 +62,10 @@
     <ClInclude Include="Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Bullet.h">
+    <ClInclude Include="Helicoptero.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Barco.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EstadosJogo.h">

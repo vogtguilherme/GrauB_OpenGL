@@ -5,7 +5,8 @@
 
 #include "Bullet.h"
 #include "Jogador.h"
-#include "Inimigo.h"
+#include "Barco.h"
+#include "Helicoptero.h"
 #include "Objetos.h"
 #include "Fuel.h"
 
@@ -45,7 +46,8 @@ public:
 
 	Bullet bullets[10];
 	Jogador jogador;
-	Inimigo IA[5];
+	Barco barcos[5];
+	Helicoptero helicoptero[2];
 	Fuel fuel[3];
 	Objetos Pecas;
 	
