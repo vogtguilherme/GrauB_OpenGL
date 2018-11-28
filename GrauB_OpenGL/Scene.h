@@ -28,15 +28,13 @@ public:
 	void SpecifyViewParameters();
 
 	void MainMenu();
-	void Playing();
+	void Playing(void);
 	void Pause();
 	void GameOver();
 	void Help();
 
 	Scene();
 	~Scene();
-
-private:
 
 	Bullet bullets[1];
 	Jogador jogador;

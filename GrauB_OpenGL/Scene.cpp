@@ -160,7 +160,7 @@ void Scene::MainMenu()
 {
 }
 
-void Scene::Playing()
+void Scene::Playing(void)
 {
 	jogador.combustivel -= (100.0f / 30.0f) / 60.0f;
 
