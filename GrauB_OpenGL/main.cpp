@@ -7,6 +7,8 @@ void runMainLoop(int val);
 void Desenha(void)
 {
 	game.Render();
+
+	glutSwapBuffers();
 }
 
 void AlteraTamanhoJanela(GLsizei w, GLsizei h)
@@ -46,8 +48,7 @@ int main(int argc, char **argv)
 	glutKeyboardFunc(GerenciaTeclas);
 
 	Inicializa();
-
-	//Set main loop
+		
 	glutTimerFunc(1000 / game.FPS, runMainLoop, 0);
 
 	glutMainLoop();

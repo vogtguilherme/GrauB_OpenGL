@@ -68,8 +68,6 @@ void Scene::GetKeyboardInput(unsigned char key, int x, int y)
 			if (jogador.x < 39) jogador.Movimenta(1);
 		}
 	}
-
-	glutPostRedisplay();
 }
 
 void Scene::GetMouseInput(int button, int state, int x, int y)
@@ -231,12 +229,7 @@ void Scene::Render()
 	else if (estadosJogo.getMenuAtivo())
 	{
 		MainMenu();
-	}
-
-	glutSwapBuffers();
-
-	//Comentei isso aqui e ficou na velocidade normal
-	glutPostRedisplay();
+	}	
 }
 
 void Scene::Start()
