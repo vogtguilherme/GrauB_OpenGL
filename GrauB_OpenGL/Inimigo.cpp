@@ -9,17 +9,14 @@ void Inimigo::CriaInimigo(float _x, float _y, float _z)
 
 void Inimigo::DesenhaInimigo()
 {
-	/*glPushMatrix();
-	glTranslatef(x, y, z);
-	glColor3f(0, 255, 169);
-	glutSolidCube(20);
-	glPopMatrix();*/
 
-	
+	glPushMatrix();
+	//caso queira rotacionar o objeto
+	//glRotatef(45, 0.0, 0.5, 0.0);
 	//base
 	glPushMatrix();
-	glScalef(8, 8, 8);
 	glTranslatef(x, y, z);
+	glScalef(20, 20, 20);
 	glColor3f(1.0, 0.0, 0.0);
 	glBegin(GL_QUADS);
 	glVertex3f(0.1f, 0.3f, 0.0);
@@ -31,9 +28,9 @@ void Inimigo::DesenhaInimigo()
 
 
 	glPushMatrix();
-	glColor3f(1.0, 0.0, 0.0);
-	glScalef(8, 8, 8);
 	glTranslatef(x, y, z);
+	glColor3f(1.0, 0.0, 0.0);
+	glScalef(20, 20, 20);
 	glTranslatef(0.0, 0.0, 0.1);
 	glBegin(GL_QUADS);
 	glVertex3f(0.1f, 0.3f, 0.0);
@@ -46,9 +43,9 @@ void Inimigo::DesenhaInimigo()
 
 	//tronco
 	glPushMatrix();
-	glColor3f(0.74, 0.56, 0.56);
-	glScalef(8, 8, 8);
 	glTranslatef(x, y, z);
+	glColor3f(0.74, 0.56, 0.56);
+	glScalef(20, 20, 20);
 	glBegin(GL_QUADS);
 	glVertex3f(0.3f, 0.3f, 0.0);
 	glVertex3f(0.3f, 0.5f, 0.0);
@@ -59,9 +56,10 @@ void Inimigo::DesenhaInimigo()
 
 
 	glPushMatrix();
-	glColor3f(0.74, 0.56, 0.56);
-	glScalef(8, 8, 8);
 	glTranslatef(x, y, z);
+	glColor3f(0.74, 0.56, 0.56);
+	glScalef(20, 20, 20);
+	
 	glTranslatef(0.0, 0.0, 0.1);
 	glBegin(GL_QUADS);
 	glVertex3f(0.3f, 0.3f, 0.0);
@@ -73,9 +71,10 @@ void Inimigo::DesenhaInimigo()
 
 
 	glPushMatrix();
-	glColor3f(0.74, 0.56, 0.56);
-	glScalef(8, 8, 8);
 	glTranslatef(x, y, z);
+	glColor3f(0.74, 0.56, 0.56);
+	glScalef(20, 20, 20);
+	
 	glTranslatef(0.4, 0.0, 0.4);
 	glRotatef(90, 0.0, 1.0, 0.0);
 	glBegin(GL_QUADS);
@@ -87,9 +86,10 @@ void Inimigo::DesenhaInimigo()
 	glPopMatrix();
 
 	glPushMatrix();
-	glColor3f(0.74, 0.56, 0.56);
-	glScalef(8, 8, 8);
 	glTranslatef(x, y, z);
+	glColor3f(0.74, 0.56, 0.56);
+	glScalef(20, 20, 20);
+	
 	glTranslatef(0.3, 0.0, 0.4);
 	glRotatef(90, 0.0, 1.0, 0.0);
 	glBegin(GL_QUADS);
@@ -101,9 +101,10 @@ void Inimigo::DesenhaInimigo()
 	glPopMatrix();
 
 	glPushMatrix();
-	glColor3f(0.74, 0.56, 0.56);
-	glScalef(8, 8, 8);
 	glTranslatef(x, y, z);
+	glColor3f(0.74, 0.56, 0.56);
+	glScalef(20, 20, 20);
+	
 	glTranslatef(-0.2, 0.1, -0.2);
 	glRotatef(90, 1.0, 0.0, 0.0);
 	glBegin(GL_QUADS);
@@ -116,9 +117,10 @@ void Inimigo::DesenhaInimigo()
 
 
 	glPushMatrix();
-	glColor3f(0.74, 0.56, 0.56);
-	glScalef(8, 8, 8);
 	glTranslatef(x, y, z);
+	glColor3f(0.74, 0.56, 0.56);
+	glScalef(20, 20, 20);
+	
 	glTranslatef(-0.3, 0.3, -0.2);
 	glRotatef(90, 1.0, 0.0, 0.0);
 	glBegin(GL_QUADS);
@@ -133,14 +135,15 @@ void Inimigo::DesenhaInimigo()
 
 	//velas
 	glPushMatrix();
-	glColor3f(0.75, 1.0, 0.0);
-	glScalef(8, 8, 8);
 	glTranslatef(x, y, z);
+	glColor3f(0.75, 1.0, 0.0);
+	glScalef(20, 20, 20);
 	glBegin(GL_TRIANGLES);
 	glVertex3f(0.4f, 0.3f, 0.0);
 	glVertex3f(0.4f, 0.5f, 0.0);
 	glVertex3f(0.6f, 0.3f, 0.0);
 	glEnd();
+	glPopMatrix();
 	glPopMatrix();
 
 	
@@ -152,16 +155,14 @@ void Inimigo::Movimento(float _x, float _z)
 	x += _x;
 	z += _z;
 
-	/*glPushMatrix();
-	glTranslatef(x, y, z);
-	glColor3f(0, 255, 169);
-	glutSolidCube(20);
-	glPopMatrix();*/
 
-	///base
+
 	glPushMatrix();
-	glScalef(8, 8, 8);
+	//glRotatef(45, 0.0, 0.5, 0.0);
+	//base
+	glPushMatrix();
 	glTranslatef(x, y, z);
+	glScalef(20, 20, 20);
 	glColor3f(1.0, 0.0, 0.0);
 	glBegin(GL_QUADS);
 	glVertex3f(0.1f, 0.3f, 0.0);
@@ -173,9 +174,9 @@ void Inimigo::Movimento(float _x, float _z)
 
 
 	glPushMatrix();
-	glColor3f(1.0, 0.0, 0.0);
-	glScalef(8, 8, 8);
 	glTranslatef(x, y, z);
+	glColor3f(1.0, 0.0, 0.0);
+	glScalef(20, 20, 20);
 	glTranslatef(0.0, 0.0, 0.1);
 	glBegin(GL_QUADS);
 	glVertex3f(0.1f, 0.3f, 0.0);
@@ -188,9 +189,9 @@ void Inimigo::Movimento(float _x, float _z)
 
 	//tronco
 	glPushMatrix();
-	glColor3f(0.74, 0.56, 0.56);
-	glScalef(8, 8, 8);
 	glTranslatef(x, y, z);
+	glColor3f(0.74, 0.56, 0.56);
+	glScalef(20, 20, 20);
 	glBegin(GL_QUADS);
 	glVertex3f(0.3f, 0.3f, 0.0);
 	glVertex3f(0.3f, 0.5f, 0.0);
@@ -201,9 +202,9 @@ void Inimigo::Movimento(float _x, float _z)
 
 
 	glPushMatrix();
-	glColor3f(0.74, 0.56, 0.56);
-	glScalef(8, 8, 8);
 	glTranslatef(x, y, z);
+	glColor3f(0.74, 0.56, 0.56);
+	glScalef(20, 20, 20);
 	glTranslatef(0.0, 0.0, 0.1);
 	glBegin(GL_QUADS);
 	glVertex3f(0.3f, 0.3f, 0.0);
@@ -215,9 +216,10 @@ void Inimigo::Movimento(float _x, float _z)
 
 
 	glPushMatrix();
-	glColor3f(0.74, 0.56, 0.56);
-	glScalef(8, 8, 8);
 	glTranslatef(x, y, z);
+	glColor3f(0.74, 0.56, 0.56);
+	glScalef(20, 20, 20);
+
 	glTranslatef(0.4, 0.0, 0.4);
 	glRotatef(90, 0.0, 1.0, 0.0);
 	glBegin(GL_QUADS);
@@ -229,9 +231,10 @@ void Inimigo::Movimento(float _x, float _z)
 	glPopMatrix();
 
 	glPushMatrix();
-	glColor3f(0.74, 0.56, 0.56);
-	glScalef(8, 8, 8);
 	glTranslatef(x, y, z);
+	glColor3f(0.74, 0.56, 0.56);
+	glScalef(20, 20, 20);
+
 	glTranslatef(0.3, 0.0, 0.4);
 	glRotatef(90, 0.0, 1.0, 0.0);
 	glBegin(GL_QUADS);
@@ -243,9 +246,10 @@ void Inimigo::Movimento(float _x, float _z)
 	glPopMatrix();
 
 	glPushMatrix();
-	glColor3f(0.74, 0.56, 0.56);
-	glScalef(8, 8, 8);
 	glTranslatef(x, y, z);
+	glColor3f(0.74, 0.56, 0.56);
+	glScalef(20, 20, 20);
+
 	glTranslatef(-0.2, 0.1, -0.2);
 	glRotatef(90, 1.0, 0.0, 0.0);
 	glBegin(GL_QUADS);
@@ -258,9 +262,9 @@ void Inimigo::Movimento(float _x, float _z)
 
 
 	glPushMatrix();
-	glColor3f(0.74, 0.56, 0.56);
-	glScalef(8, 8, 8);
 	glTranslatef(x, y, z);
+	glColor3f(0.74, 0.56, 0.56);
+	glScalef(20, 20, 20);
 	glTranslatef(-0.3, 0.3, -0.2);
 	glRotatef(90, 1.0, 0.0, 0.0);
 	glBegin(GL_QUADS);
@@ -275,16 +279,17 @@ void Inimigo::Movimento(float _x, float _z)
 
 	//velas
 	glPushMatrix();
-	glColor3f(0.75, 1.0, 0.0);
-	glScalef(8, 8, 8);
 	glTranslatef(x, y, z);
+	glColor3f(0.75, 1.0, 0.0);
+	glScalef(20, 20, 20);
+
 	glBegin(GL_TRIANGLES);
 	glVertex3f(0.4f, 0.3f, 0.0);
 	glVertex3f(0.4f, 0.5f, 0.0);
 	glVertex3f(0.6f, 0.3f, 0.0);
 	glEnd();
 	glPopMatrix();
-
+	glPopMatrix();
 }
 
 Inimigo::Inimigo()
