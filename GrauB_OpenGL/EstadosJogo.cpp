@@ -6,12 +6,12 @@ EstadosJogo::EstadosJogo()
 	over = false;
 	jogo = false;
 
-	novoJogo = "New Game";
-	sairJogo = "Quit Game";
+	novoJogo = "JOGAR";
+	sairJogo = "SAIR";
 	continuar = "Continue";
 	tituloJogo = "RIVER RAID 3D";
 	setaSelecao = "-->";
-	_gameOver = "You Lose!";
+	_gameOver = "GAME OVER!";
 	aux = 1;
 }
 

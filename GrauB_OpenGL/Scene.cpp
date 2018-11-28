@@ -2,14 +2,16 @@
 
 void Scene::Update()
 {
-	if (estadosJogo.getSairJogo())
-	{
-		exit(0);
-	}
-
+	//Controle das variáveis de estado e fluxo do jogo
 	if (estadosJogo.getJogo())
 	{
 		
+	}
+
+	//Condicional para quando o usuario deseja sair do jogo
+	if (estadosJogo.getSairJogo())
+	{
+		exit(0);
 	}
 }
 
@@ -284,6 +286,7 @@ void Scene::MainMenu()
 	{
 		estadosJogo.Titulo(estadosJogo.setaSelecao.data(), estadosJogo.setaSelecao.size(), 300, 270);
 	}
+
 	estadosJogo.Titulo(estadosJogo.tituloJogo.data(), estadosJogo.tituloJogo.size(), 320, 420);
 }
 
@@ -375,6 +378,21 @@ void Scene::Pause()
 
 void Scene::GameOver()
 {
+	glColor3f(1.0, 1.0, 1.0);
+	estadosJogo.Texto(estadosJogo.novoJogo.data(), estadosJogo.novoJogo.size(), 352, 270);
+	estadosJogo.Texto(estadosJogo.sairJogo.data(), estadosJogo.sairJogo.size(), 350, 220);
+
+	if (estadosJogo.getAuxMenu() == 0)
+	{
+		estadosJogo.Titulo(estadosJogo.setaSelecao.data(), estadosJogo.setaSelecao.size(), 300, 220);
+	}
+	else
+	{
+		estadosJogo.Titulo(estadosJogo.setaSelecao.data(), estadosJogo.setaSelecao.size(), 300, 270);
+	}
+
+	glColor3f(1.0, 0.0, 0.0);
+	estadosJogo.Titulo(estadosJogo._gameOver.data(), estadosJogo._gameOver.size(), 330, 420);
 }
 
 void Scene::Help()
