@@ -6,6 +6,10 @@ public:
 
 	float x, y, z;
 
+	int vidas, acertos;
+
+	float combustivel;
+
 	void Desenhajogador();
 	void CriaPlayer(float _x, float _y, float _z);
 

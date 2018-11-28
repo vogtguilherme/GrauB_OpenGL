@@ -18,6 +18,12 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Fuel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Inimigo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -38,6 +44,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Fuel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Inimigo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
