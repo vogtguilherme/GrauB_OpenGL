@@ -4,14 +4,17 @@ EstadosJogo::EstadosJogo()
 {
 	menuAtivo = true;
 	over = false;
+	paused = false;
 	jogo = false;
 
 	novoJogo = "JOGAR";
+	restart = "RESTART";
 	sairJogo = "SAIR";
-	continuar = "Continue";
+	continuar = "CONTINUE";
 	tituloJogo = "RIVER RAID 3D";
 	setaSelecao = "-->";
 	_gameOver = "GAME OVER!";
+	pauseText = "PAUSE";
 	aux = 1;
 }
 
@@ -99,7 +102,7 @@ void EstadosJogo::gameOver()
 	glEnd();
 
 	glColor3f(1.0, 1.0, 1.0);
-	Texto(novoJogo.data(), novoJogo.size(), 352, 270);
+	Texto(restart.data(), restart.size(), 352, 270);
 	Texto(sairJogo.data(), sairJogo.size(), 350, 220);
 	
 	if (aux == 0)
@@ -112,6 +115,32 @@ void EstadosJogo::gameOver()
 	}
 
 	Titulo(_gameOver.data(), _gameOver.size(), 330, 420);
+}
+
+void EstadosJogo::pause()
+{
+	glColor3f(0.0, 0.0, 0.0);
+	glBegin(GL_QUADS);
+	glVertex2f(-5.0, -5.0); //Inferior Esquerdo
+	glVertex2f(-5.0, 5.0); //Superior Esquerdo
+	glVertex2f(5.0, 5.0);  //Superior Direito
+	glVertex2f(5.0, -5.0);  //Inferior Direito
+	glEnd();
+
+	glColor3f(1.0, 1.0, 1.0);
+	Texto(continuar.data(), continuar.size(), 352, 270);
+	Texto(sairJogo.data(), sairJogo.size(), 350, 220);
+
+	if (aux == 0)
+	{
+		Titulo(setaSelecao.data(), setaSelecao.size(), 300, 220);
+	}
+	else
+	{
+		Titulo(setaSelecao.data(), setaSelecao.size(), 300, 270);
+	}
+
+	Titulo(pauseText.data(), pauseText.size(), 330, 420);
 }
 
 void EstadosJogo::setMenuAtivo(bool menu)
@@ -152,6 +181,16 @@ void EstadosJogo::setJogo(bool _jogo)
 bool EstadosJogo::getJogo()
 {
 	return jogo;
+}
+
+void EstadosJogo::setPause(bool __pause)
+{
+	paused = __pause;
+}
+
+bool EstadosJogo::getPause()
+{
+	return paused;
 }
 
 void EstadosJogo::setAuxMenu(int _aux)
